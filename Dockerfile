@@ -12,6 +12,7 @@ COPY src src
 COPY tsconfig.json .
 COPY config.ts .
 COPY .env .
+COPY index.ts .
 # COPY public public
 
 # ENV NODE_ENV='production'
