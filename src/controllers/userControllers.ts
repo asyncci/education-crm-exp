@@ -7,8 +7,8 @@ import { comparePassword } from "../lib/core";
 export async function signUp(req: Request, res: Response) {
     const { email, password, role } = req.body;
 
-    if ( role === 'curator' ) 
-        return res.status(400).send({ success: false, error: 'You can not register `curator`'})
+    if (role === 'curator')
+        return res.status(400).send({ success: false, error: 'You can not register `curator`' })
 
     const user = await User.findOne({ 'email': email })
     if (user)
@@ -22,8 +22,10 @@ export async function signUp(req: Request, res: Response) {
     return await userData
         .save()
         .then(async (userObj) => {
+            let ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
+
             const token = sign(
-                { user: { _id: userObj._id, email: userObj?.email || '', role: userObj.role } },
+                { user: { _id: userObj._id, email: userObj?.email || '', role: userObj.role }, ip: ip },
                 config.secretKey,
                 { expiresIn: config.expiresIn }
             )
@@ -68,9 +70,10 @@ export async function signIn(req: Request, res: Response) {
     if (!validPassword)
         return res.status(409).send({ success: false, error: 'Invalid Credentials' })
 
+    let ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
 
     const token = sign(
-        { user: { _id: user._id, email: user.email || '', role: user.role } },
+        { user: { _id: user._id, email: user.email || '', role: user.role }, ip: ip },
         config.secretKey,
         { expiresIn: config.expiresIn }
     )

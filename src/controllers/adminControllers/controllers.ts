@@ -4,6 +4,7 @@ import { User } from "../../models/userModel";
 import { addCurator, deleteCurator } from "./curatorAccount";
 import { changeStudentRequestStatus, getRequestsFromStudents, requestPayment } from "./projectManagement";
 import { optimizeNextInvocation } from "bun:jsc";
+import { createCourse } from "../courseControllers";
 
 const router = express.Router()
 
@@ -36,4 +37,7 @@ router.get('/classRequests',getRequestsFromStudents)
 router.put('/classRequest', changeStudentRequestStatus)
 router.post('/payment', requestPayment)
 
-export const curatorControllers = router
+// create course
+router.post('/course', createCourse)
+
+export const adminControllers = router

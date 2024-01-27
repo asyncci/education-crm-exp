@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.2",
   "info": {
-    "title": "API Title",
+    "title": "EduCRM",
     "version": "1.0"
   },
   "servers": [
@@ -10,11 +10,205 @@
     }
   ],
   "paths": {
-    "/test": {
+    "/sign-up": {
+      "post": {
+        "tags": ["Public"],
+        "summary": "Operation registers either student or mentor",
+        "requestBody": {
+          "content": {
+            "application/json":{
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum":["mentor","student"]
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Admin(curator) cannot be registered"
+          },
+          "409": {
+            "description": "User already exists"
+          },
+          "500": {
+            "description": "Database errors"
+          },
+          "201": {
+            "description": "Registered"
+          }
+        }
+      }
+    },
+    "/sign-in": {
+      "post": {
+        "tags": ["Public"],
+        "summary": "Login, should return jwt token",
+        "requestBody": {
+          "content": {
+            "application/json":{
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "409": {
+            "description": "Invalid credentials"
+          },
+          "500": {
+            "description": "Database errors"
+          },
+          "202": {
+            "description": "Authorization"
+          }
+        }
+      }
+    },
+    "/courses": {
       "get": {
+        "tags": ["Public"],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "List of all courses"
+          }
+        }
+      }
+    },
+    "/academicAreas": {
+      "get": {
+        "tags": ["Public"],
+        "responses": {
+          "200": {
+            "description": "List of all academic areas"
+          }
+        }
+      }
+    },
+    "/admin": {
+      "post": {
+        "tags": ["Admin"]
+      },
+      "delete": {
+        "tags": ["Admin"]
+      }
+    },
+    "/admin/academicArea": {
+      "post": {
+        "tags": ["Admin"]
+      },
+      "delete":{
+        "tags": ["Admin"]
+      }
+    },
+    "/admin/classRequests": {
+      "get": {
+        "tags": ["Admin"]
+      },
+      "put": {
+        "tags": ["Admin"]
+      }
+    },
+    "/admin/course": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Create group course",
+        "requestBody":{
+          "content": {
+            "application/json":{
+              "schema":{
+                "type":"object",              
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "syllabus": {
+                    "type": "string"
+                  },
+                  "files": {
+                    "type": "array",
+                    "title": "Links to files",
+                    "items":{
+                      "type": "string"
+                    }
+                  },
+                  "sessions_count": {
+                    "type": "number"
+                  },
+                  "mentor": {
+                    "type": "string",
+                    "title": "Object id to bind to mentor",
+                    "nullable": true
+                  },
+                  "rating": {
+                    "type": "number"
+                  },
+                  "final_gallery": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "nullable": true
+                  },
+                  "payment": {
+                    "type": "string",
+                    "title": "price"
+                  },
+                  "testimonials": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "nullable": true
+                  },
+                  "registered_students_count": {
+                    "type": "number",
+                    "default": 0,
+                    "nullable": true
+                  },
+                  "starting_date": {
+                    "type": "string",
+                    "example": "01-01-2001"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Course created"
+          },
+          "500": {
+            "description": "Database errors"
           }
         }
       }

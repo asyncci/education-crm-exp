@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { User } from "../models/userModel";
 import { MentorProfile } from "../models/profileModel";
-import { MentorProject } from "../models/projectModel";
+import { MentorProject } from "../models/projectModel_DEPRECATED";
 
 export async function createProject(req: Request, res: Response) {
     const { authorization } = req.headers;
