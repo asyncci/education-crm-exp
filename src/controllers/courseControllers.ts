@@ -19,14 +19,20 @@ export async function createCourse(req: Request, res: Response) {
     return await newCourse
         .save()
         .then((obj) => res.status(201).send({ success: true, data: { course: obj } }))
-        .catch(() => res.status(500).send({ success: false, message: "Database error, while saving `Course`" }))
+        .catch((err) => {
+            console.log('Database error: ', err)
+            return res.status(500).send({ success: false, message: "Database error, while saving `Course`" })
+        })
 }
 
 //delete course
 export async function deleteCourse(req: Request, res: Response) {
     return await Course.deleteOne({ _id: req.params.id })
         .then(() => res.send({ success: true, message: 'Course deleted' }))
-        .catch(() => res.status(500).send({ success: false, error: "Database error deleting `Course`" }))
+        .catch((err) => {
+            console.log('Database error: ', err)
+            return res.status(500).send({ success: false, error: "Database error deleting `Course`" })
+        })
 }
 
 //edit course

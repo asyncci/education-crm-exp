@@ -9,14 +9,25 @@
       "url": "http://localhost:3002"
     }
   ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
   "paths": {
     "/sign-up": {
       "post": {
-        "tags": ["Public"],
+        "tags": [
+          "Public"
+        ],
         "summary": "Operation registers either student or mentor",
         "requestBody": {
           "content": {
-            "application/json":{
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -29,7 +40,10 @@
                   },
                   "role": {
                     "type": "string",
-                    "enum":["mentor","student"]
+                    "enum": [
+                      "mentor",
+                      "student"
+                    ]
                   }
                 }
               }
@@ -55,11 +69,13 @@
     },
     "/sign-in": {
       "post": {
-        "tags": ["Public"],
+        "tags": [
+          "Public"
+        ],
         "summary": "Login, should return jwt token",
         "requestBody": {
           "content": {
-            "application/json":{
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -91,7 +107,9 @@
     },
     "/courses": {
       "get": {
-        "tags": ["Public"],
+        "tags": [
+          "Public"
+        ],
         "responses": {
           "200": {
             "description": "List of all courses"
@@ -101,7 +119,9 @@
     },
     "/academicAreas": {
       "get": {
-        "tags": ["Public"],
+        "tags": [
+          "Public"
+        ],
         "responses": {
           "200": {
             "description": "List of all academic areas"
@@ -111,37 +131,59 @@
     },
     "/admin": {
       "post": {
-        "tags": ["Admin"]
+        "tags": [
+          "Admin"
+        ]
       },
       "delete": {
-        "tags": ["Admin"]
+        "tags": [
+          "Admin"
+        ]
       }
     },
     "/admin/academicArea": {
       "post": {
-        "tags": ["Admin"]
+        "tags": [
+          "Admin"
+        ]
       },
-      "delete":{
-        "tags": ["Admin"]
+      "delete": {
+        "tags": [
+          "Admin"
+        ]
       }
     },
     "/admin/classRequests": {
       "get": {
-        "tags": ["Admin"]
+        "tags": [
+          "Admin"
+        ]
       },
       "put": {
-        "tags": ["Admin"]
+        "tags": [
+          "Admin"
+        ]
       }
     },
     "/admin/course": {
       "post": {
-        "tags": ["Admin"],
+        "tags": [
+          "Admin"
+        ],
         "summary": "Create group course",
-        "requestBody":{
+        "parameters": [
+          
+        ],
+        "security": [
+          { 
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
           "content": {
-            "application/json":{
-              "schema":{
-                "type":"object",              
+            "application/json": {
+              "schema": {
+                "type": "object",
                 "properties": {
                   "title": {
                     "type": "string"
@@ -155,47 +197,21 @@
                   "files": {
                     "type": "array",
                     "title": "Links to files",
-                    "items":{
-                      "type": "string"
-                    }
-                  },
-                  "sessions_count": {
-                    "type": "number"
-                  },
-                  "mentor": {
-                    "type": "string",
-                    "title": "Object id to bind to mentor",
-                    "nullable": true
-                  },
-                  "rating": {
-                    "type": "number"
-                  },
-                  "final_gallery": {
-                    "type": "array",
                     "items": {
                       "type": "string"
                     },
                     "nullable": true
+                  },
+                  "sessions_count": {
+                    "type": "number"
                   },
                   "payment": {
                     "type": "string",
                     "title": "price"
                   },
-                  "testimonials": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "nullable": true
-                  },
-                  "registered_students_count": {
-                    "type": "number",
-                    "default": 0,
-                    "nullable": true
-                  },
                   "starting_date": {
                     "type": "string",
-                    "example": "01-01-2001"
+                    "example": "2001-12-01"
                   }
                 }
               }

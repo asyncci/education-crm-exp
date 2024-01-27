@@ -7,8 +7,8 @@ import { studentControllers } from "./controllers/studentControllers/controllers
 let router = express.Router()
 
 function authorization(req: Request, res: Response, next: NextFunction) {
-    
-    const token = req.headers.authorization || req.body.authorization;
+    let token = req.headers.authorization || req.body.authorization;
+
     if (token) {
         const verified = verify(token, config.secretKey)
 
