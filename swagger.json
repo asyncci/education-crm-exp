@@ -175,10 +175,9 @@
         ],
         "summary": "Create group course",
         "parameters": [
-          
         ],
         "security": [
-          { 
+          {
             "BearerAuth": []
           }
         ],
@@ -230,6 +229,188 @@
             "description": "Database errors"
           }
         }
+      }
+    },
+    "/admin/requests/student/all": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Returns all student requests"
+      }
+    },
+    "/admin/requests/student/{studentId}": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Returns all student requests by student id. Query params passes a student id : string",
+        "parameters": [
+          {
+            "name": "studentId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ]
+      }
+    },
+    "/admin/requests/{id}": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Returns one request by request id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ]
+      }
+    },
+    "/admin/requests/student/edit": {
+      "put": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Approve or decline student request",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "student": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "course": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "wating",
+                      "approved",
+                      "declined"
+                    ]
+                  },
+                  "decisionDate": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": true
+      }
+    },
+    "/student/requests/{studentId}": {
+      "get": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Returns all student requests by student id. Query params passes a student id : string",
+        "parameters": [
+          {
+            "name": "studentId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ]
+      }
+    },
+    "/student/requests/{id}": {
+      "get": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Returns one request by request id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ]
+      }
+    },
+    "/student/requests/new": {
+      "post": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Creates a new student request for a course",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "student": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "course": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "default": "waiting",
+                    "enum": [
+                      "wating",
+                      "approved",
+                      "declined"
+                    ]
+                  },
+                  "requestDate": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Database error, while saving `StudentRequest`"
+          }
+        }
+      }
+    },
+    "/student/requests/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Deletes one request by request id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ]
       }
     }
   }
