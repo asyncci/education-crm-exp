@@ -3,7 +3,12 @@ import { User } from "../../models/userModel";
 import { createStudentProfile, deleteStudentProfile, updateStudentProfile } from "./profile";
 import { getPaymentRequests, getRequests, requestOneToOne, submitProof } from "./requests";
 import { StudentProfile } from "../../models/profileModel";
-
+import {
+    createStudentRequest,
+    deleteStudentRequest,
+    studentRequest,
+    studentRequestsByStudent
+} from "../studentRequestControllers"
 const router = express.Router()
 
 async function checkStudent(req: Request, res: Response, next: NextFunction) {
@@ -46,5 +51,15 @@ router.get('/requests', getRequests)
 router.get('/payments', getPaymentRequests)
 //here student submits photo
 router.put('/submit', submitProof)
+
+//view all my requests for a course
+router.get('/requests/:studentId', studentRequestsByStudent)
+//view one request for a course
+router.get('/requests/:id', studentRequest)
+//make request for a course
+router.post('/requests/new', createStudentRequest)
+//delete request for a course
+router.delete('/requests/delete/:id', deleteStudentRequest)
+
 
 export const studentControllers = router;

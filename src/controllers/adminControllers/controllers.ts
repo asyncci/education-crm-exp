@@ -5,6 +5,12 @@ import { addCurator, deleteCurator } from "./curatorAccount";
 import { changeStudentRequestStatus, getRequestsFromStudents, requestPayment } from "./projectManagement";
 import { optimizeNextInvocation } from "bun:jsc";
 import { createCourse } from "../courseControllers";
+import {
+    editStudentRequest,
+    studentRequest,
+    studentRequests,
+    studentRequestsByStudent
+} from "../studentRequestControllers"
 
 const router = express.Router()
 
@@ -39,5 +45,13 @@ router.post('/payment', requestPayment)
 
 // create course
 router.post('/course', createCourse)
+
+//view student requests for a course
+router.get('/requests/student/all', studentRequests)
+router.get('/requests/student/:studentId', studentRequestsByStudent)
+router.get('/requests/:id', studentRequest)
+
+//approve or decline student request
+router.put('/requests/student/edit/:id', editStudentRequest)
 
 export const adminControllers = router
