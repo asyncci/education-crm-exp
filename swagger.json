@@ -310,7 +310,15 @@
             }
           }
         },
-        "required": true
+        "required": true,
+      "responses": {
+        "200": {
+          "description": "StudentRequest updated"
+        },
+        "500": {
+          "description": "Request doesn't exist"
+        }
+      }
       }
     },
     "/student/requests/{studentId}": {
@@ -363,10 +371,11 @@
                 "properties": {
                   "student": {
                     "type": "string",
-                    "format": "email"
+                    "format": "Student.Id"
                   },
                   "course": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "Course.Id"
                   },
                   "status": {
                     "type": "string",
@@ -378,7 +387,8 @@
                     ]
                   },
                   "requestDate": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "date-time"
                   }
                 }
               }
@@ -410,8 +420,141 @@
             },
             "required": true
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "StudentRequest deleted"
+          },
+          "500": {
+            "description": "Database error deleting `StudentRequest`"
+          }
+        }
+      }
+    },
+    "/reviews": {
+      "get": {
+        "tags": [
+          "Public"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of all reviews"
+          }
+        }
+      }
+    },
+    "/reviews/{id}": {
+      "get": {
+        "tags": [
+          "Public"
+        ],
+        "responses": {
+          "200": {
+            "description": "View one review by passing review id as path variable"
+          }
+        }
+      }
+    },
+    "/reviews/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Private"
+        ],
+        "summary": "Deletes one review by ID in Path Variable. Available to authenticated users.",
+        "responses": {
+          "200": {
+            "description": "Review was deleted"
+          },
+          "500": {
+            "description": "Database error deleting `Review`"
+          }
+        }
+      }
+
+    },
+    "/reviews/new": {
+      "post": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Creates new review. Available to students.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "rating": {
+                    "type": "number",
+                    "default": "5.0"
+                  },
+                  "comment": {
+                    "type": "string"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "student": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Review was created"
+          },
+          "500": {
+            "description": "Database error, while saving `Review`"
+          }
+        }
+      }
+    },
+    "/reviews/edit": {
+      "put": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Edits existing review. Available to students.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "rating": {
+                    "type": "number",
+                    "default": "5.0"
+                  },
+                  "comment": {
+                    "type": "string"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "student": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+      "responses": {
+        "200": {
+          "description": "Review was updated"
+        },
+        "400": {
+          "description": "Review doesn't exist"
+        }
+      }
       }
     }
   }
 }
+
+

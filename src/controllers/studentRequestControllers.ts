@@ -52,6 +52,6 @@ export async function editStudentRequest(req: Request, res: Response) {
             if (doc)
                 return res.status(200).send({ success: true, message: 'StudentRequest updated', data: { course: doc} })
             else
-                return res.status(400).send({ success: false, error: "Profile doesn't exist" })
+                return res.status(400).send({ success: false, error: "Request doesn't exist" })
         })
 }
