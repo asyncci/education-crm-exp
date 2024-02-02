@@ -24,5 +24,23 @@ const ActiveCourseSchema = new Schema({
     status: { enum: ['enrollment', 'started', 'finished'] },
 })
 
+const CertificateSchema = new Schema({
+    course: { type: Schema.Types.ObjectId, ref: 'Course'},
+    mentor: { type: Schema.Types.ObjectId, ref: 'MentorProfile'},
+    student: { type: Schema.Types.ObjectId, ref: 'StudentProfile'},
+    signature: String,
+    dateIssued: Date
+})
+
+const RecommendationLetterSchema = new Schema({
+    mentor: { type: Schema.Types.ObjectId, ref: 'MentorProfile'},
+    student: { type: Schema.Types.ObjectId, ref: 'StudentProfile'},
+    signature: String,
+    recommendationText: String,
+    dateIssued: Date
+})
+
+export const RecommendationLetter = model('RecommendationLetter', RecommendationLetterSchema);
+export const Certificate = model('Certificate', CertificateSchema);
 export const Course = model('Course', CourseSchema);
 export const ActiveCourse = model('ActiveCourse', ActiveCourseSchema);

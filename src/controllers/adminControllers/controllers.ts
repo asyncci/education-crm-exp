@@ -11,6 +11,7 @@ import {
     studentRequests,
     studentRequestsByStudent
 } from "../studentRequestControllers"
+import {getAllStudents} from "../studentControllers/profile.ts";
 
 const router = express.Router()
 
@@ -53,5 +54,8 @@ router.get('/requests/:id', studentRequest)
 
 //approve or decline student request
 router.put('/requests/student/edit/:id', editStudentRequest)
+
+//get all student profiles
+router.get('/profiles/all/students', getAllStudents)
 
 export const adminControllers = router

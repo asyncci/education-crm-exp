@@ -136,36 +136,87 @@
       "post": {
         "tags": [
           "Admin"
-        ]
+        ],
+        "responses": {
+          "201": {
+            "description": "Curator registered"
+          },
+          "409": {
+            "description": "User already exists"
+          },
+          "500": {
+            "description": "Can't store user in database"
+          }
+        }
       },
       "delete": {
         "tags": [
           "Admin"
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "Curator deleted"
+          },
+          "500": {
+            "description": "Can't delete `curator` from database"
+          }
+        }
       }
     },
     "/admin/academicArea": {
       "post": {
         "tags": [
           "Admin"
-        ]
+        ],
+        "responses": {
+          "201": {
+            "description": "Academic area was added"
+          },
+          "500": {
+            "description": "Can't store `Academic Area` in database"
+          }
+        }
       },
       "delete": {
         "tags": [
           "Admin"
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "Academic area deleted"
+          },
+          "500": {
+            "description": "Can't delete `academic area`"
+          }
+        }
       }
     },
     "/admin/classRequests": {
       "get": {
         "tags": [
           "Admin"
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
       },
       "put": {
         "tags": [
           "Admin"
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "Status of student's request changed"
+          },
+          "404": {
+            "description": "Incorrect request ID"
+          },
+          "500": {
+            "description": "Can't update request"
+          }
+        }
       }
     },
     "/admin/course": {
@@ -236,7 +287,12 @@
         "tags": [
           "Admin"
         ],
-        "summary": "Returns all student requests"
+        "summary": "Returns all student requests",
+        "responses": {
+          "200": {
+            "description": "Successful request"
+          }
+        }
       }
     },
     "/admin/requests/student/{studentId}": {
@@ -254,7 +310,15 @@
             },
             "required": true
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request"
+          },
+          "404": {
+            "description": "Request not found"
+          }
+        }
       }
     },
     "/admin/requests/{id}": {
@@ -272,7 +336,15 @@
             },
             "required": true
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request"
+          },
+          "404": {
+            "description": "Request not found"
+          }
+        }
       }
     },
     "/admin/requests/student/edit": {
@@ -297,7 +369,7 @@
                   "status": {
                     "type": "string",
                     "enum": [
-                      "wating",
+                      "waiting",
                       "approved",
                       "declined"
                     ]
@@ -308,17 +380,17 @@
                 }
               }
             }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "StudentRequest updated"
+          },
+          "500": {
+            "description": "Request doesn't exist"
           }
-        },
-        "required": true,
-      "responses": {
-        "200": {
-          "description": "StudentRequest updated"
-        },
-        "500": {
-          "description": "Request doesn't exist"
         }
-      }
       }
     },
     "/student/requests/{studentId}": {
@@ -336,7 +408,12 @@
             },
             "required": true
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request"
+          }
+        }
       }
     },
     "/student/requests/{id}": {
@@ -354,7 +431,15 @@
             },
             "required": true
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request"
+          },
+          "404": {
+            "description": "Request not found"
+          }
+        }
       }
     },
     "/student/requests/new": {
@@ -381,7 +466,7 @@
                     "type": "string",
                     "default": "waiting",
                     "enum": [
-                      "wating",
+                      "waiting",
                       "approved",
                       "declined"
                     ]
@@ -470,7 +555,6 @@
           }
         }
       }
-
     },
     "/reviews/new": {
       "post": {
@@ -544,17 +628,208 @@
             }
           }
         },
-      "responses": {
-        "200": {
-          "description": "Review was updated"
-        },
-        "400": {
-          "description": "Review doesn't exist"
+        "responses": {
+          "200": {
+            "description": "Review was updated"
+          },
+          "400": {
+            "description": "Review doesn't exist"
+          }
         }
       }
+    },
+    "/admin/profiles/all/students": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Admin can view all student profiles in one place",
+        "responses": {
+          "200": {
+            "description": "Successfully got student profiles"
+          },
+          "404": {
+            "description": "No Data"
+          }
+        }
+      }
+    },
+    "/profile/{profileId}": {
+      "get": {
+        "tags": [
+          "Private"
+        ],
+        "summary": "view one student profile by profile id",
+        "responses": {
+          "200": {
+            "description": "Successfully got student profile"
+          },
+          "404": {
+            "description": "No Data"
+          }
+        }
+      }
+    },
+    "/student": {
+      "post": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "create new student profile",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nameChinese": {
+                    "type": "string"
+                  },
+                  "nameEnglish": {
+                    "type": "string"
+                  },
+                  "profilePhoto": {
+                    "type": "string"
+                  },
+                  "studentWechat": {
+                    "type": "string"
+                  },
+                  "parentWechat": {
+                    "type": "string"
+                  },
+                  "studentEmail": {
+                    "type": "string"
+                  },
+                  "studentWhatsApp": {
+                    "type": "string"
+                  },
+                  "parentWhatsApp": {
+                    "type": "string"
+                  },
+                  "parentTelegram": {
+                    "type": "string"
+                  },
+                  "school": {
+                    "type": "string"
+                  },
+                  "accountLogin": {
+                    "type": "string"
+                  },
+                  "accountEmail": {
+                    "type": "string"
+                  },
+                  "user": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": {
+            "description": "Can't save profile to database"
+          },
+          "201": {
+            "description": "Successfully created profile"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "update student profile",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nameChinese": {
+                    "type": "string"
+                  },
+                  "nameEnglish": {
+                    "type": "string"
+                  },
+                  "profilePhoto": {
+                    "type": "string"
+                  },
+                  "studentWechat": {
+                    "type": "string"
+                  },
+                  "parentWechat": {
+                    "type": "string"
+                  },
+                  "studentEmail": {
+                    "type": "string"
+                  },
+                  "studentWhatsApp": {
+                    "type": "string"
+                  },
+                  "parentWhatsApp": {
+                    "type": "string"
+                  },
+                  "parentTelegram": {
+                    "type": "string"
+                  },
+                  "school": {
+                    "type": "string"
+                  },
+                  "accountLogin": {
+                    "type": "string"
+                  },
+                  "accountEmail": {
+                    "type": "string"
+                  },
+                  "user": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": {
+            "description": "Profile doesn't exist"
+          },
+          "200": {
+            "description": "Successfully updated profile"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Deletes profile by id",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "user": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Profile was deleted"
+          },
+          "500": {
+            "description": "Can't delete profile"
+          }
+        }
       }
     }
   }
 }
+
+
 
 
