@@ -9,6 +9,7 @@ import {
     studentRequest,
     studentRequestsByStudent
 } from "../studentRequestControllers"
+import {createReview, editReview} from "../reviewControllers.ts";
 const router = express.Router()
 
 async function checkStudent(req: Request, res: Response, next: NextFunction) {
@@ -61,5 +62,9 @@ router.post('/requests/new', createStudentRequest)
 //delete request for a course
 router.delete('/requests/delete/:id', deleteStudentRequest)
 
+//create review (for a course)
+router.post('/reviews/new', createReview)
+//edit review (for a course)
+router.put('/reviews/edit', editReview)
 
 export const studentControllers = router;

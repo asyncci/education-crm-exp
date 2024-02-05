@@ -3,6 +3,8 @@ import { verify } from 'jsonwebtoken'
 import { config } from "../config";
 import { adminControllers } from "./controllers/adminControllers/controllers";
 import { studentControllers } from "./controllers/studentControllers/controllers";
+import {deleteReview} from "./controllers/reviewControllers";
+import {getStudent} from "./controllers/studentControllers/profile.ts";
 
 let router = express.Router()
 
@@ -32,6 +34,13 @@ router.use(authorization)
 
 router.use('/admin', adminControllers)
 router.use('/student', studentControllers)
+
+//delete student's review by review id - available to students, instructors, and admins
+router.delete('/reviews/delete/:id', deleteReview)
+
+//view student profile
+router.get('/profile/:profileId', getStudent)
+
 
 
 export const privateRoutes = router;
