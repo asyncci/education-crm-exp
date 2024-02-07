@@ -2,27 +2,54 @@ import { Request, Response } from "express";
 import { User } from "../../models/userModel";
 import { StudentProfile } from "../../models/profileModel";
 
+// export async function createStudentProfile(req: Request, res: Response) {
+//     const user = res.locals.user;
+//     const isProfile = await StudentProfile.findById(user.profile);
+//
+//     if (isProfile)
+//         return res.status(400).send({ success: false, error: 'Profile already exsists' })
+//
+//     const { body } = req;
+//     const newProfile = new StudentProfile(body);
+//     return await newProfile
+//         .save()
+//         .then(async (profileObj) => {
+//             await User.updateOne({ _id: user._id }, { $set: { profile: profileObj._id } })
+//                 .catch(() => {
+//                     return res.status(500).send({ success: false, error: "Can't update user profile in database" })
+//                 })
+//
+//             return res.status(200).send({ success: true, message: 'Successfuly created profile', data: { profileId: profileObj } })
+//         })
+//         .catch(() => res.status(500).send({ success: false, error: "Can't save profile to database" }))
+//
+// }
 export async function createStudentProfile(req: Request, res: Response) {
     const user = res.locals.user;
     const isProfile = await StudentProfile.findById(user.profile);
 
     if (isProfile)
-        return res.status(400).send({ success: false, error: 'Profile already exsists' })
+        return res.status(400).send({ success: false, error: 'Profile already exists' });
 
     const { body } = req;
     const newProfile = new StudentProfile(body);
-    return await newProfile
-        .save()
-        .then(async (profileObj) => {
-            await User.updateOne({ _id: user._id }, { $set: { profile: profileObj._id } })
-                .catch(() => {
-                    return res.status(500).send({ success: false, error: "Can't update user profile in database" })
-                })
 
-            return res.status(200).send({ success: true, message: 'Successfuly created profile', data: { profile: profileObj } })
-        })
-        .catch(() => res.status(500).send({ success: false, error: "Can't save profile to database" }))
+    try {
+        const savedProfile = await newProfile.save();
+        await User.updateOne({ _id: user._id }, { $set: { profile: savedProfile._id } });
 
+        return res.status(200).send({
+            success: true,
+            message: 'Successfully created profile',
+            data: { profileId: savedProfile._id }
+        });
+    } catch (error) {
+        console.error('Error saving profile:', error);
+        return res.status(500).send({
+            success: false,
+            error: "Can't save profile to database"
+        });
+    }
 }
 
 export async function updateStudentProfile(req: Request, res: Response) {

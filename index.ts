@@ -22,6 +22,8 @@ app.use(bodyParser.json())
 app.use('/docs', serve, setup(swaggerDoc))
 app.use(validator({ schema: swaggerDoc }));
 
+// Bun.env.MONGODB = 'mongodb://localhost:27017/';
+
 if (!Bun.env.MONGODB) {
     throw new Error('Provide the "MONGODB" env variable (link to database server)')
 }

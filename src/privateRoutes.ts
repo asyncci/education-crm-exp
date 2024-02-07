@@ -39,7 +39,7 @@ router.use('/student', studentControllers)
 router.delete('/reviews/delete/:id', deleteReview)
 
 //view student profile
-router.get('/profile/:profileId', getStudent)
+router.get('/profile/student/:profileId', getStudent)
 
 
 

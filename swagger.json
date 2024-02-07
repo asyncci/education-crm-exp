@@ -304,7 +304,7 @@
         "parameters": [
           {
             "name": "studentId",
-            "in": "query",
+            "in": "path",
             "schema": {
               "type": "string"
             },
@@ -330,7 +330,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "query",
+            "in": "path",
             "schema": {
               "type": "string"
             },
@@ -402,7 +402,7 @@
         "parameters": [
           {
             "name": "studentId",
-            "in": "query",
+            "in": "path",
             "schema": {
               "type": "string"
             },
@@ -425,7 +425,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "query",
+            "in": "path",
             "schema": {
               "type": "string"
             },
@@ -499,7 +499,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "query",
+            "in": "path",
             "schema": {
               "type": "string"
             },
@@ -546,6 +546,16 @@
           "Private"
         ],
         "summary": "Deletes one review by ID in Path Variable. Available to authenticated users.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
         "responses": {
           "200": {
             "description": "Review was deleted"
@@ -654,12 +664,22 @@
         }
       }
     },
-    "/profile/{profileId}": {
+    "/profile/student/{profileId}": {
       "get": {
         "tags": [
           "Private"
         ],
         "summary": "view one student profile by profile id",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successfully got student profile"
@@ -691,23 +711,59 @@
                   "profilePhoto": {
                     "type": "string"
                   },
-                  "studentWechat": {
-                    "type": "string"
+                  "studentContacts": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "owner": {
+                          "type": "string",
+                          "enum": [
+                            "student"
+                          ]
+                        },
+                        "contactService": {
+                          "type": "string",
+                          "description": "The ID of the contact service"
+                        },
+                        "contactValue": {
+                          "type": "string",
+                          "description": "The value of the contact information"
+                        }
+                      },
+                      "required": [
+                        "owner",
+                        "contactService",
+                        "contactValue"
+                      ]
+                    }
                   },
-                  "parentWechat": {
-                    "type": "string"
-                  },
-                  "studentEmail": {
-                    "type": "string"
-                  },
-                  "studentWhatsApp": {
-                    "type": "string"
-                  },
-                  "parentWhatsApp": {
-                    "type": "string"
-                  },
-                  "parentTelegram": {
-                    "type": "string"
+                  "parentContacts": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "owner": {
+                          "type": "string",
+                          "enum": [
+                            "student"
+                          ]
+                        },
+                        "contactService": {
+                          "type": "string",
+                          "description": "The ID of the contact service"
+                        },
+                        "contactValue": {
+                          "type": "string",
+                          "description": "The value of the contact information"
+                        }
+                      },
+                      "required": [
+                        "owner",
+                        "contactService",
+                        "contactValue"
+                      ]
+                    }
                   },
                   "school": {
                     "type": "string"
@@ -826,10 +882,107 @@
           }
         }
       }
+    },
+    "/contactServices": {
+      "get": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "get all contact services: WeChat, Email, Telegram, etc.",
+        "responses": {
+          "200": {
+            "description": "List of contact services"
+          }
+        }
+      }
+    },
+    "/admin/contactServices": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "create a new contact service. i.e., Instagram, Telegram",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contactService": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Database error, while saving `ContactService`"
+          }
+        }
+      }
+    },
+    "/admin/contactServices/{id}": {
+      "put": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "edit existing contact service. i.e., fix a typo",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the contact service to be edited"
+          },
+          {
+            "in": "body",
+            "name": "contactService",
+            "required": true,
+            "schema": {
+              "type": "object"
+            },
+            "description": "The updated contact service data"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ContactService was updated"
+          },
+          "400": {
+            "description": "ContactService doesn't exist"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "delete a contact service by service id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ContactService was deleted"
+          },
+          "500": {
+            "description": "Database error deleting `ContactService`"
+          }
+        }
+      }
     }
   }
 }
-
-
-
-

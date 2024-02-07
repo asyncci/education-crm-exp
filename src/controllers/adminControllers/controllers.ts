@@ -12,6 +12,11 @@ import {
     studentRequestsByStudent
 } from "../studentRequestControllers"
 import {getAllStudents} from "../studentControllers/profile.ts";
+import {
+    contactServices,
+    createContactService, deleteContactService,
+    editContactService
+} from "../profileControllers/profileManagementControllers.ts";
 
 const router = express.Router()
 
@@ -57,5 +62,10 @@ router.put('/requests/student/edit/:id', editStudentRequest)
 
 //get all student profiles
 router.get('/profiles/all/students', getAllStudents)
+
+//ContactServices: Instagram, Email, WeChat, etc.
+router.post('/contactServices', createContactService)
+router.put('/contactServices/:id', editContactService)
+router.delete('/contactServices/:id', deleteContactService)
 
 export const adminControllers = router
