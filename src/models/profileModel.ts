@@ -10,58 +10,42 @@ let MentorSchema = new Schema({
 
 export const MentorProfile = model('MentorProfile', MentorSchema);
 
-// interface Contacts {
-//     [key: string]: string;
-// }
-//
-// interface Student extends Document {
-//     nameChinese: string;
-//     nameEnglish: string;
-//     profilePhoto: string;
-//     studentContacts: Contacts;
-//     parentContacts: Contacts;
-//     school: string;
-//     accountLogin: string;
-//     accountEmail: string;
-//     user: Schema.Types.ObjectId;
-//     currentAndPastCourses: Schema.Types.ObjectId[];
-//     likedCourses: Schema.Types.ObjectId[];
-// oneToOneClasses: Schema.Types.ObjectId[];
-//     certificates: Schema.Types.ObjectId[];
-//     recommendationLetters: Schema.Types.ObjectId[];
-//
-// }
+
 let StudentSchema = new Schema({
     nameChinese: String,
     nameEnglish: String,
     profilePhoto: String,
-    studentWechat: String,
-    parentWechat: String,
-    studentEmail: String,
-    studentWhatsApp: String,
-    parentWhatsApp: String,
-    parentTelegram: String,
-    // studentContacts: {
-    //     type: Map,
-    //     of: String,
-    // },
-    // parentContacts: {
-    //     type: Map,
-    //     of: String,
-    // },
+    studentContacts: [{
+        owner: { type: String, default: 'student', enum: ['student', 'parent'] },
+        contactService: { type: Schema.Types.ObjectId, ref: 'ContactService' },
+        contactValue: String
+    }],
+    parentContacts: [{
+        owner: { type: String, default: 'parent', enum: ['student', 'parent'] },
+        contactService: { type: Schema.Types.ObjectId, ref: 'ContactService' },
+        contactValue: String
+    }],
     school: String,
     accountLogin: String,
     accountEmail: String,
     user: { type: Schema.Types.ObjectId, ref: 'User'},
     currentAndPastCourses:[{ type: Schema.Types.ObjectId, ref: 'ActiveCourse'}],
     likedCourses: [{ type: Schema.Types.ObjectId, ref: 'Course'}],
-    //Course contracts:
-    //my pending reviews are stored in the studentRequestSchema. When I click a button "On Review",
-    // I can send a request via endpoint '/student/requests/student/:studentId'
     oneToOneClasses:[{type: Schema.Types.ObjectId, ref: 'OneToOneClass'}],
     certificates:[{type: Schema.Types.ObjectId, ref: 'Certificate'}],
     recommendationLetters:[{type: Schema.Types.ObjectId, ref: 'RecommendationLetter'}]
 })
 
+let ContactSchema = new Schema({
+    student: {type: Schema.Types.ObjectId, ref: 'Student'},
+    owner: { type: String, default: 'student', enum: ['student','parent']},
+    contactService: { type: Schema.Types.ObjectId, ref: 'ContactService'},
+    contactValue: String
+})
 
+let ContactServiceSchema = new Schema({
+contactService:String
+})
+export const ContactService = model('ContactService', ContactServiceSchema)
+export const Contacts = model('Contacts', ContactSchema)
 export const StudentProfile = model('StudentProfile', StudentSchema);
