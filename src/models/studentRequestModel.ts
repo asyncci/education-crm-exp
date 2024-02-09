@@ -8,4 +8,5 @@ let StudentRequestSchema = new Schema({
     decisionDate: Date
 })
 
+
 export const StudentRequest = model('StudentRequest', StudentRequestSchema);

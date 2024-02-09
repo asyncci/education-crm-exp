@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { StudentRequest } from "../models/studentRequestModel";
+import { StudentRequest } from "../../models/studentRequestModel";
+import {GroupCoursePayment} from "../../models/paymentModel.ts";
 
 //get all - for admins
 export async function studentRequests (req: Request, res: Response) {
@@ -48,10 +49,32 @@ export async function deleteStudentRequest(req: Request, res: Response) {
 //edit StudentRequest - for admins
 export async function editStudentRequest(req: Request, res: Response) {
     return await StudentRequest.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
-        .then(async (doc) => {
+        .then(async (doc:any) => {
             if (doc)
                 return res.status(200).send({ success: true, message: 'StudentRequest updated', data: { course: doc} })
             else
                 return res.status(400).send({ success: false, error: "Request doesn't exist" })
         })
+}
+
+/// Get list of payment requests
+export async function getPaymentRequests(ref: Request, res: Response) {
+    const studentProfile = res.locals.user.profile;
+    const requests = await GroupCoursePayment.find({ student: studentProfile })
+
+    return res.send({ success: true, data: { paymentRequests: requests } })
+}
+
+/// Submit payment request proof
+export async function submitProof(req: Request, res: Response) {
+    const { paymentId, photoLink } = req.body;
+
+    return await GroupCoursePayment.findByIdAndUpdate(paymentId, { photoLink: photoLink, status: 'pending' }, { new: true })
+        .then((doc) => {
+            if (!doc)
+                return res.status(404).send({success: false, error: "No data"})
+
+            return res.send({ success: true, message: 'Link updated'})
+        })
+        .catch(() => res.status(500).send({ success: false, error: "Can't update link"}))
 }

@@ -6,17 +6,10 @@ import { changeStudentRequestStatus, getRequestsFromStudents, requestPayment } f
 import { optimizeNextInvocation } from "bun:jsc";
 import { createCourse } from "../courseControllers";
 import {
-    editStudentRequest,
-    studentRequest,
-    studentRequests,
-    studentRequestsByStudent
-} from "../studentRequestControllers"
-import {getAllStudents} from "../studentControllers/profile.ts";
+    editStudentRequest,studentRequest,studentRequests,studentRequestsByStudent} from "../studentControllers/groupClassRequests"
+import {getAllStudents} from "../studentControllers/profile";
 import {
-    contactServices,
-    createContactService, deleteContactService,
-    editContactService
-} from "../profileControllers/profileManagementControllers.ts";
+    createContactService, deleteContactService, editContactService} from "../profileControllers/contactsManagementControllers";
 
 const router = express.Router()
 
@@ -61,7 +54,7 @@ router.get('/requests/:id', studentRequest)
 router.put('/requests/student/edit/:id', editStudentRequest)
 
 //get all student profiles
-router.get('/profiles/all/students', getAllStudents)
+router.get('/students', getAllStudents)
 
 //ContactServices: Instagram, Email, WeChat, etc.
 router.post('/contactServices', createContactService)

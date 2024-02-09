@@ -16,6 +16,8 @@ const CourseSchema = new Schema({
     registered_students_count: Number,
     starting_date: Date,
 })
+export const Course = model('Course', CourseSchema);
+
 
 const ActiveCourseSchema = new Schema({
     course: { type: Schema.Types.ObjectId, ref: 'Course'},
@@ -42,5 +44,4 @@ const RecommendationLetterSchema = new Schema({
 
 export const RecommendationLetter = model('RecommendationLetter', RecommendationLetterSchema);
 export const Certificate = model('Certificate', CertificateSchema);
-export const Course = model('Course', CourseSchema);
 export const ActiveCourse = model('ActiveCourse', ActiveCourseSchema);
