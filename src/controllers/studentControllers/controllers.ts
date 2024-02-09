@@ -1,14 +1,14 @@
 import express, { NextFunction, Request, Response } from "express";
 import { User } from "../../models/userModel";
 import { createStudentProfile, deleteStudentProfile, updateStudentProfile } from "./profile";
-import { getPaymentRequests, getRequests, requestOneToOne, submitProof } from "./requests";
+import { getPaymentRequests, getRequests, requestOneToOne, submitProof } from "./oneToOneClassRequests.ts";
 import { StudentProfile } from "../../models/profileModel";
 import {
     createStudentRequest,
     deleteStudentRequest,
     studentRequest,
     studentRequestsByStudent
-} from "../studentRequestControllers"
+} from "../studentControllers/groupClassRequests"
 import {createReview, editReview} from "../reviewControllers.ts";
 const router = express.Router()
 

@@ -28,7 +28,7 @@ let StudentSchema = new Schema({
     school: String,
     accountLogin: String,
     accountEmail: String,
-    user: { type: Schema.Types.ObjectId, ref: 'User'},
+    // user: { type: Schema.Types.ObjectId, ref: 'User'},
     currentAndPastCourses:[{ type: Schema.Types.ObjectId, ref: 'ActiveCourse'}],
     likedCourses: [{ type: Schema.Types.ObjectId, ref: 'Course'}],
     oneToOneClasses:[{type: Schema.Types.ObjectId, ref: 'OneToOneClass'}],
@@ -36,16 +36,9 @@ let StudentSchema = new Schema({
     recommendationLetters:[{type: Schema.Types.ObjectId, ref: 'RecommendationLetter'}]
 })
 
-let ContactSchema = new Schema({
-    student: {type: Schema.Types.ObjectId, ref: 'Student'},
-    owner: { type: String, default: 'student', enum: ['student','parent']},
-    contactService: { type: Schema.Types.ObjectId, ref: 'ContactService'},
-    contactValue: String
-})
 
 let ContactServiceSchema = new Schema({
 contactService:String
 })
 export const ContactService = model('ContactService', ContactServiceSchema)
-export const Contacts = model('Contacts', ContactSchema)
 export const StudentProfile = model('StudentProfile', StudentSchema);
