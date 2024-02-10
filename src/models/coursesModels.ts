@@ -1,7 +1,7 @@
 import mongoose, { Schema, model } from "mongoose";
 
 //intake independent
-let GroupCourse = new Schema({
+let GroupCourseSchema = new Schema({
     academicArea: String,
     topic: String,
     description: String,
@@ -12,7 +12,7 @@ let GroupCourse = new Schema({
 })
 
 //intake dependent
-let GroupClass = new Schema({
+let GroupClassSchema = new Schema({
     groupCourse: { type: Schema.Types.ObjectId, ref: 'GroupCourse' },
     status: { type: String, enum: ['not_started', 'ongoing', 'finished'] },
     starting_date: Date,
@@ -24,7 +24,7 @@ let GroupClass = new Schema({
     price: String,
 })
 
-let GroupClassSession = new Schema({
+let GroupClassSessionSchema = new Schema({
     count: { default: 0, type: Number },
     objective: String,
     goal: String,
@@ -36,6 +36,10 @@ let GroupClassSession = new Schema({
     ]
 })
 
+export const GroupCourse = model('GroupCourse', GroupCourseSchema);
+export const GroupClass = model('GroupClass', GroupClassSchema);
+export const GroupClassSession = model('GroupClassSession', GroupClassSessionSchema);
+
 let IndividualClass = new Schema({
 
 })
@@ -45,4 +49,3 @@ let IndividualClass = new Schema({
 
 
 
-export const OneToOneClass = model('OneToOneClass', OngoingCourse);
