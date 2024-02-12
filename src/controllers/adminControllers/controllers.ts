@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response, Router } from "express";
-import { addAcademicArea, deleteAcademicArea } from "./curatorUtils";
+import { addAcademicArea, deleteAcademicArea } from "../academicAreaControllers.ts";
 import { User } from "../../models/userModel";
 import { addCurator, deleteCurator } from "./curatorAccount";
 import { changeStudentRequestStatus, getRequestsFromStudents, requestPayment } from "./projectManagement";

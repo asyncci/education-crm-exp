@@ -33,6 +33,8 @@ async function checkProfile(req: Request, res: Response, next: NextFunction) {
     if (!profile)
         return res.status(403).send({ success: false, error: "Please create profile first" })
 
+    res.locals.student = profile;
+
     next()
 }
 
