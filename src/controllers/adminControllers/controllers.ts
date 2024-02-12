@@ -1,5 +1,4 @@
 import express, {NextFunction, Request, Response} from "express";
-import {addAcademicArea, deleteAcademicArea} from "./curatorUtils";
 import {User} from "../../models/userModel";
 import {addCurator, deleteCurator} from "./curatorAccount";
 import {changeStudentRequestStatus, getRequestsFromStudents, requestPayment} from "./projectManagement";
@@ -14,6 +13,7 @@ import {courseRoutesForAdminsAndMentors} from "../courseControllers/courseRoutes
 import {
     courseRoutesAdminsMentorsStudentsWhoPaid
 } from "../courseControllers/courseRoutesAdminsMentorsStudentsWhoPaid.ts";
+import {addAcademicArea, deleteAcademicArea} from "../academicAreaControllers.ts";
 
 const router = express.Router()
 
