@@ -42,7 +42,7 @@ router.post('/academicArea', addAcademicArea)
 router.delete('/academicArea', deleteAcademicArea)
 
 /// management
-router.get('/classRequests', getRequestsFromStudents)
+router.get('/classRequests',getRequestsFromStudents)
 router.put('/classRequest', changeStudentRequestStatus)
 router.post('/payment', requestPayment)
 

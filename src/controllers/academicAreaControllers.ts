@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { AcademicArea } from "../../models/academicAreaModel";
+import { AcademicArea } from "../models/academicAreaModel";
 
 /// Available course areas
 export async function addAcademicArea(req: Request, res: Response) {    

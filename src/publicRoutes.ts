@@ -1,6 +1,6 @@
 import express from "express"
 import { signIn, signUp } from "./controllers/userControllers";
-import {getAcademicAreas} from "./controllers/adminControllers/curatorUtils";
+import {getAcademicAreas} from "./controllers/academicAreaControllers.ts";
 import {getReview, getReviews} from "./controllers/reviewControllers.ts";
 import {courseRoutesPublic} from "./controllers/courseControllers/courseRoutesPublic.ts";
 import {contactServices} from "./controllers/profileControllers/contactsManagementControllers.ts";
