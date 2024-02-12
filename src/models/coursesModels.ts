@@ -28,7 +28,7 @@ let GroupClassSessionSchema = new Schema({
     count: { default: 0, type: Number },
     objective: String,
     goal: String,
-    attendace: [
+    attendance: [
         {
             student: { type: Schema.Types.ObjectId, ref: 'StudentProfile' },
             status: { type: String, enum: ['absent', 'present', 'excused'] }
@@ -48,4 +48,13 @@ let IndividualClass = new Schema({
 ///TODO: Sessions
 
 
+let GroupCourseRequestSchema = new Schema({
+    student: { type: Schema.Types.ObjectId, ref: 'StudentProfile' },
+    course: { type: Schema.Types.ObjectId, ref: 'GroupCourse' },
+    status: { type: String, default: 'waiting', enum: ['waiting', 'approved', 'declined'] },
+    requestDate: Date,
+    decisionDate: Date
+})
 
+
+export const GroupCourseRequest = model('GroupCourseRequest', GroupCourseRequestSchema);

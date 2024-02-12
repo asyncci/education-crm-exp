@@ -29,11 +29,11 @@ let StudentSchema = new Schema({
     accountLogin: String,
     accountEmail: String,
     // user: { type: Schema.Types.ObjectId, ref: 'User'},
-    currentAndPastCourses:[{ type: Schema.Types.ObjectId, ref: 'ActiveCourse'}],
-    likedCourses: [{ type: Schema.Types.ObjectId, ref: 'Course'}],
-    oneToOneClasses:[{type: Schema.Types.ObjectId, ref: 'OneToOneClass'}],
-    certificates:[{type: Schema.Types.ObjectId, ref: 'Certificate'}],
-    recommendationLetters:[{type: Schema.Types.ObjectId, ref: 'RecommendationLetter'}]
+    // currentAndPastCourses:[{ type: Schema.Types.ObjectId, ref: 'ActiveCourse'}],
+    // likedCourses: [{ type: Schema.Types.ObjectId, ref: 'Course'}],
+    // oneToOneClasses:[{type: Schema.Types.ObjectId, ref: 'OneToOneClass'}],
+    // certificates:[{type: Schema.Types.ObjectId, ref: 'Certificate'}],
+    // recommendationLetters:[{type: Schema.Types.ObjectId, ref: 'RecommendationLetter'}]
 })
 
 
