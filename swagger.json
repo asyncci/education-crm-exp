@@ -1161,185 +1161,184 @@
           }
         }
       },
-        "put": {
-          "tags": [
-            "Profile"
-          ],
-          "summary": "Update instructor profile",
-          "parameters": [
-            {
-              "in": "header",
-              "name": "authorization",
-              "required": true,
-              "schema": {
-                "type": "string"
-              },
-              "description": "Authorization token"
-            }
-          ],
-          "requestBody": {
+      "put": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "Update instructor profile",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
             "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "firstName": {
-                      "type": "string"
-                    },
-                    "lastName": {
-                      "type": "string"
-                    },
-                    "subject": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Successful operation"
+            "schema": {
+              "type": "string"
             },
-            "400": {
-              "description": "Profile doesn't exist",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "success": {
-                        "type": "boolean",
-                        "description": "Indicates if the request was successful"
-                      },
-                      "error": {
-                        "type": "string",
-                        "description": "Error message indicating profile doesn't exist"
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "403": {
-              "description": "Forbidden",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "success": {
-                        "type": "boolean",
-                        "description": "Indicates if the request was successful"
-                      },
-                      "error": {
-                        "type": "string",
-                        "description": "Error message indicating forbidden access"
-                      },
-                      "message": {
-                        "type": "string",
-                        "description": "Additional message"
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "User not found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "success": {
-                        "type": "boolean",
-                        "description": "Indicates if the request was successful"
-                      },
-                      "error": {
-                        "type": "string",
-                        "description": "Error message indicating user not found"
-                      }
-                    }
+            "description": "Authorization token"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "subject": {
+                    "type": "string"
                   }
                 }
               }
             }
           }
         },
-        "delete": {
-          "tags": [
-            "Profile"
-          ],
-          "summary": "Delete instructor profile",
-          "parameters": [
-            {
-              "in": "header",
-              "name": "authorization",
-              "required": true,
-              "schema": {
-                "type": "string"
-              },
-              "description": "Authorization token"
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Profile doesn't exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates if the request was successful"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Error message indicating profile doesn't exist"
+                    }
+                  }
+                }
+              }
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successful operation",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "success": {
-                        "type": "boolean",
-                        "description": "Indicates if the request was successful"
-                      },
-                      "message": {
-                        "type": "string",
-                        "description": "A message regarding the operation"
-                      }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates if the request was successful"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Error message indicating forbidden access"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Additional message"
                     }
                   }
                 }
               }
-            },
-            "404": {
-              "description": "No profile",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "success": {
-                        "type": "boolean",
-                        "description": "Indicates if the request was successful"
-                      },
-                      "error": {
-                        "type": "string",
-                        "description": "Error message indicating no profile found"
-                      }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates if the request was successful"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Error message indicating user not found"
                     }
                   }
                 }
               }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "Delete instructor profile",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
             },
-            "500": {
-              "description": "Can't delete profile",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "success": {
-                        "type": "boolean",
-                        "description": "Indicates if the request was successful"
-                      },
-                      "error": {
-                        "type": "string",
-                        "description": "Error message indicating deletion failure"
-                      }
+            "description": "Authorization token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates if the request was successful"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A message regarding the operation"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates if the request was successful"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Error message indicating no profile found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Can't delete profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates if the request was successful"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Error message indicating deletion failure"
                     }
                   }
                 }

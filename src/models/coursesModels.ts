@@ -31,7 +31,7 @@ let GroupClassSessionSchema = new Schema({
     count: { default: 0, type: Number },
     objective: String,
     goal: String,
-    attendace: [
+    attendance: [
         {
             student: { type: Schema.Types.ObjectId, ref: 'StudentProfile' },
             status: { type: String, enum: ['absent', 'present', 'excused'] }

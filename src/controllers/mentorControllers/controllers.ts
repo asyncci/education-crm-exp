@@ -6,7 +6,7 @@ import {
     deleteMentorProfile,
     getMentor,
     updateMentorProfile
-} from "../profileControllers/mentorProfileControllers";
+} from "./profile.ts";
 
 const router = express.Router()
 async function checkMentor(req: Request, res: Response, next: NextFunction) {

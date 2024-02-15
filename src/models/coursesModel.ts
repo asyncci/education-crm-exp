@@ -14,4 +14,3 @@ let GroupClass = new Schema({
     students: [ { type: Schema.Types.ObjectId, ref: 'StudentProfile' } ]
 })
 
-export const OneToOneClass = model('OneToOneClass', OngoingCourse);

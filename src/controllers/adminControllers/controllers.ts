@@ -9,7 +9,7 @@ import {
     editStudentRequest,studentRequest,studentRequests,studentRequestsByStudent} from "../studentControllers/groupClassRequests"
 import {getAllStudents} from "../studentControllers/profile";
 import {
-    createContactService, deleteContactService, editContactService} from "../profileControllers/contactsManagementControllers";
+    createContactService, deleteContactService, editContactService} from "../studentControllers/profileManagementControllers.ts";
 
 const router = express.Router()
 
