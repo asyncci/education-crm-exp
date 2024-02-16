@@ -299,6 +299,9 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "id": {
+                    "type": "string"
+                  },
                   "title": {
                     "type": "string"
                   },
@@ -326,6 +329,42 @@
                   "starting_date": {
                     "type": "string",
                     "example": "2001-12-01"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Course created"
+          },
+          "500": {
+            "description": "Database errors"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Edit group course",
+        "parameters": [
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
                   }
                 }
               }
