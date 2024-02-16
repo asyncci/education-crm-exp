@@ -280,6 +280,67 @@
             "description": "Database errors"
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Edit group course",
+        "parameters": [
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "syllabus": {
+                    "type": "string"
+                  },
+                  "files": {
+                    "type": "array",
+                    "title": "Links to files",
+                    "items": {
+                      "type": "string"
+                    },
+                    "nullable": true
+                  },
+                  "sessions_count": {
+                    "type": "number"
+                  },
+                  "payment": {
+                    "type": "string",
+                    "title": "price"
+                  },
+                  "starting_date": {
+                    "type": "string",
+                    "example": "2001-12-01"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Course created"
+          },
+          "500": {
+            "description": "Database errors"
+          }
+        }
       }
     },
     "/admin/requests/student/all": {

@@ -27,7 +27,7 @@ export async function createCourse(req: Request, res: Response) {
 
 //delete course
 export async function deleteCourse(req: Request, res: Response) {
-    return await Course.deleteOne({ _id: req.params.id })
+    return await Course.deleteOne({ _id: req.body.id })
         .then(() => res.send({ success: true, message: 'Course deleted' }))
         .catch((err) => {
             console.log('Database error: ', err)
@@ -37,7 +37,7 @@ export async function deleteCourse(req: Request, res: Response) {
 
 //edit course
 export async function editCourse(req: Request, res: Response) {
-    return await Course.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
+    return await Course.findOneAndUpdate({ _id: req.body.id }, req.body, { new: true })
         .then(async (doc) => {
             if (doc)
                 return res.status(200).send({ success: true, message: 'Course updated', data: { course: doc} })

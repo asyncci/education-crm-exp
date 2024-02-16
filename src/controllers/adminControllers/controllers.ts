@@ -4,7 +4,7 @@ import { User } from "../../models/userModel";
 import { addCurator, deleteCurator } from "./curatorAccount";
 import { changeStudentRequestStatus, getRequestsFromStudents, requestPayment } from "./projectManagement";
 import { optimizeNextInvocation } from "bun:jsc";
-import { createCourse } from "../courseControllers";
+import {createCourse, deleteCourse, editCourse} from "../courseControllers";
 import {
     editStudentRequest,studentRequest,studentRequests,studentRequestsByStudent} from "../studentControllers/groupClassRequests"
 import {getAllStudents} from "../studentControllers/profile";
@@ -44,6 +44,8 @@ router.post('/payment', requestPayment)
 
 // create course
 router.post('/course', createCourse)
+router.put('/course', editCourse)
+router.delete('/course', deleteCourse)
 
 //view student requests for a course
 router.get('/requests/student/all', studentRequests)
