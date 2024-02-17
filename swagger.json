@@ -19,6 +19,247 @@
         "name": "Authorization",
         "in": "header"
       }
+    },
+    "schemas": {
+      "GroupCourse": {
+        "type": "object",
+        "properties": {
+          "academicArea": {
+            "type": "string",
+            "description": "The academic area of the course"
+          },
+          "topic": {
+            "type": "string",
+            "description": "The topic of the course"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the course"
+          },
+          "syllabus": {
+            "type": "string",
+            "description": "The syllabus of the course"
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of file paths related to the course"
+          },
+          "mentor": {
+            "type": "string",
+            "description": "The ID of the mentor associated with the course"
+          },
+          "gallery": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of image paths for the course gallery"
+          }
+        }
+      },
+      "GroupClass": {
+        "type": "object",
+        "properties": {
+          "groupCourse": {
+            "type": "string",
+            "description": "The ID of the group course associated with the group class"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["not_started", "ongoing", "finished"],
+            "description": "The status of the group class"
+          },
+          "starting_date": {
+            "type": "string",
+            "format": "date",
+            "description": "The starting date of the group class"
+          },
+          "finish_date": {
+            "type": "string",
+            "format": "date",
+            "description": "The finish date of the group class"
+          },
+          "sessions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "The IDs of the group class sessions associated with the group class"
+            },
+            "description": "The sessions of the group class"
+          },
+          "students": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "The IDs of the student profiles enrolled in the group class"
+            },
+            "description": "The students enrolled in the group class"
+          },
+          "intake_gallery": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "Links to images representing the intake gallery of the group class"
+            },
+            "description": "The intake gallery of the group class"
+          },
+          "testimonials": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "The IDs of the student testimonials associated with the group class"
+            },
+            "description": "The testimonials of the group class"
+          },
+          "price": {
+            "type": "string",
+            "description": "The price of the group class"
+          }
+        }
+      },
+      "Testimonial": {
+        "type": "object",
+        "properties": {
+          "rating": {
+            "type": "number",
+            "default": "5.0"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "student": {
+            "type": "string"
+          }
+        }
+      },
+      "StudentProfile": {
+        "type": "object",
+        "properties": {
+          "nameChinese": {
+            "type": "string"
+          },
+          "nameEnglish": {
+            "type": "string"
+          },
+          "profilePhoto": {
+            "type": "string"
+          },
+          "studentContacts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "owner": {
+                  "type": "string",
+                  "enum": [
+                    "student"
+                  ]
+                },
+                "contactService": {
+                  "type": "string",
+                  "description": "The ID of the contact service"
+                },
+                "contactValue": {
+                  "type": "string",
+                  "description": "The value of the contact information"
+                }
+              },
+              "required": [
+                "owner",
+                "contactService",
+                "contactValue"
+              ]
+            }
+          },
+          "parentContacts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "owner": {
+                  "type": "string",
+                  "enum": [
+                    "student"
+                  ]
+                },
+                "contactService": {
+                  "type": "string",
+                  "description": "The ID of the contact service"
+                },
+                "contactValue": {
+                  "type": "string",
+                  "description": "The value of the contact information"
+                }
+              },
+              "required": [
+                "owner",
+                "contactService",
+                "contactValue"
+              ]
+            }
+          },
+          "school": {
+            "type": "string"
+          },
+          "accountLogin": {
+            "type": "string"
+          },
+          "accountEmail": {
+            "type": "string"
+          }
+        }
+      },
+      "MentorProfile": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          }
+        }
+      },
+      "GroupClassSession": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "number",
+            "default": 0
+          },
+          "objective": {
+            "type": "string"
+          },
+          "goal": {
+            "type": "string"
+          },
+          "attendance": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "student": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": ["absent", "present", "excused"]
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "paths": {
@@ -108,11 +349,12 @@
         }
       }
     },
-    "/courses": {
+    "/group_course": {
       "get": {
         "tags": [
-          "Public"
+          "Group Course"
         ],
+        "summary": "Get all courses. Access: public",
         "responses": {
           "200": {
             "description": "List of all courses"
@@ -120,10 +362,40 @@
         }
       }
     },
+    "/group_course/{id}": {
+      "get": {
+        "tags": [
+          "Group Course"
+        ],
+        "summary": "Get a group course by ID. Access: public",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "ID of the group course to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the group course"
+          },
+          "404": {
+            "description": "Group course not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
     "/academicAreas": {
       "get": {
         "tags": [
-          "Public"
+          "Academic Area"
         ],
         "responses": {
           "200": {
@@ -166,7 +438,7 @@
     "/admin/academicArea": {
       "post": {
         "tags": [
-          "Admin"
+          "Academic Area"
         ],
         "responses": {
           "201": {
@@ -179,7 +451,7 @@
       },
       "delete": {
         "tags": [
-          "Admin"
+          "Academic Area"
         ],
         "responses": {
           "200": {
@@ -194,18 +466,43 @@
     "/admin/classRequests": {
       "get": {
         "tags": [
-          "Admin"
+          "OneToOne"
         ],
         "responses": {
           "200": {
             "description": "Successful response"
           }
         }
-      },
+      }
+    },
+    "/admin/classRequest": {
       "put": {
         "tags": [
-          "Admin"
+          "OneToOne"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "requestId": {
+                    "type": "string",
+                    "description": "The ID of the request to be updated."
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "The new status to be assigned to the request. Must be either 'approved' or 'declined'."
+                  }
+                },
+                "required": [
+                  "requestId",
+                  "status"
+                ]
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Status of student's request changed"
@@ -219,361 +516,26 @@
         }
       }
     },
-    "/admin/course": {
+    "/student/request": {
       "post": {
         "tags": [
-          "Admin"
+          "OneToOne"
         ],
-        "summary": "Create group course",
-        "parameters": [
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ],
+        "summary": "Access:student.Request new one to one class",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "title": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "syllabus": {
-                    "type": "string"
-                  },
-                  "files": {
-                    "type": "array",
-                    "title": "Links to files",
-                    "items": {
-                      "type": "string"
-                    },
-                    "nullable": true
-                  },
-                  "sessions_count": {
-                    "type": "number"
-                  },
-                  "payment": {
+                  "academicArea": {
                     "type": "string",
-                    "title": "price"
+                    "description": "The academic area of the class."
                   },
-                  "starting_date": {
+                  "topic": {
                     "type": "string",
-                    "example": "2001-12-01"
-                  }
-                }
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Course created"
-          },
-          "500": {
-            "description": "Database errors"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Admin"
-        ],
-        "summary": "Edit group course",
-        "parameters": [
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  },
-                  "title": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "syllabus": {
-                    "type": "string"
-                  },
-                  "files": {
-                    "type": "array",
-                    "title": "Links to files",
-                    "items": {
-                      "type": "string"
-                    },
-                    "nullable": true
-                  },
-                  "sessions_count": {
-                    "type": "number"
-                  },
-                  "payment": {
-                    "type": "string",
-                    "title": "price"
-                  },
-                  "starting_date": {
-                    "type": "string",
-                    "example": "2001-12-01"
-                  }
-                }
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Course created"
-          },
-          "500": {
-            "description": "Database errors"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Admin"
-        ],
-        "summary": "Edit group course",
-        "parameters": [
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Course created"
-          },
-          "500": {
-            "description": "Database errors"
-          }
-        }
-      }
-    },
-    "/admin/requests/student/all": {
-      "get": {
-        "tags": [
-          "Admin"
-        ],
-        "summary": "Returns all student requests",
-        "responses": {
-          "200": {
-            "description": "Successful request"
-          }
-        }
-      }
-    },
-    "/admin/requests/student/{studentId}": {
-      "get": {
-        "tags": [
-          "Admin"
-        ],
-        "summary": "Returns all student requests by student id. Query params passes a student id : string",
-        "parameters": [
-          {
-            "name": "studentId",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful request"
-          },
-          "404": {
-            "description": "Request not found"
-          }
-        }
-      }
-    },
-    "/admin/requests/{id}": {
-      "get": {
-        "tags": [
-          "Admin"
-        ],
-        "summary": "Returns one request by request id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful request"
-          },
-          "404": {
-            "description": "Request not found"
-          }
-        }
-      }
-    },
-    "/admin/requests/student/edit": {
-      "put": {
-        "tags": [
-          "Admin"
-        ],
-        "summary": "Approve or decline student request",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "student": {
-                    "type": "string",
-                    "format": "email"
-                  },
-                  "course": {
-                    "type": "string"
-                  },
-                  "status": {
-                    "type": "string",
-                    "enum": [
-                      "waiting",
-                      "approved",
-                      "declined"
-                    ]
-                  },
-                  "decisionDate": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "StudentRequest updated"
-          },
-          "500": {
-            "description": "Request doesn't exist"
-          }
-        }
-      }
-    },
-    "/student/requests/{studentId}": {
-      "get": {
-        "tags": [
-          "Student"
-        ],
-        "summary": "Returns all student requests by student id. Query params passes a student id : string",
-        "parameters": [
-          {
-            "name": "studentId",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful request"
-          }
-        }
-      }
-    },
-    "/student/requests/{id}": {
-      "get": {
-        "tags": [
-          "Student"
-        ],
-        "summary": "Returns one request by request id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful request"
-          },
-          "404": {
-            "description": "Request not found"
-          }
-        }
-      }
-    },
-    "/student/requests/new": {
-      "post": {
-        "tags": [
-          "Student"
-        ],
-        "summary": "Creates a new student request for a course",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "student": {
-                    "type": "string",
-                    "format": "Student.Id"
-                  },
-                  "course": {
-                    "type": "string",
-                    "format": "Course.Id"
-                  },
-                  "status": {
-                    "type": "string",
-                    "default": "waiting",
-                    "enum": [
-                      "waiting",
-                      "approved",
-                      "declined"
-                    ]
-                  },
-                  "requestDate": {
-                    "type": "string",
-                    "format": "date-time"
+                    "description": "The topic of the class."
                   }
                 }
               }
@@ -581,37 +543,11 @@
           }
         },
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "500": {
-            "description": "Database error, while saving `StudentRequest`"
-          }
-        }
-      }
-    },
-    "/student/requests/delete/{id}": {
-      "delete": {
-        "tags": [
-          "Student"
-        ],
-        "summary": "Deletes one request by request id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
           "200": {
-            "description": "StudentRequest deleted"
+            "description": "Successful request creation"
           },
           "500": {
-            "description": "Database error deleting `StudentRequest`"
+            "description": "Internal server error"
           }
         }
       }
@@ -619,11 +555,11 @@
     "/reviews": {
       "get": {
         "tags": [
-          "Public"
+          "Testimonial"
         ],
         "responses": {
           "200": {
-            "description": "List of all reviews"
+            "description": "List of all reviews. Access: public"
           }
         }
       }
@@ -631,11 +567,11 @@
     "/reviews/{id}": {
       "get": {
         "tags": [
-          "Public"
+          "Testimonial"
         ],
         "responses": {
           "200": {
-            "description": "View one review by passing review id as path variable"
+            "description": "View one review by passing review id as path variable. Access: public"
           }
         }
       }
@@ -643,9 +579,9 @@
     "/reviews/delete/{id}": {
       "delete": {
         "tags": [
-          "Private"
+          "Testimonial"
         ],
-        "summary": "Deletes one review by ID in Path Variable. Available to authenticated users.",
+        "summary": "Access: private. Deletes one review by ID ",
         "parameters": [
           {
             "name": "id",
@@ -666,33 +602,17 @@
         }
       }
     },
-    "/reviews/new": {
+    "/student/reviews/new": {
       "post": {
         "tags": [
-          "Student"
+          "Testimonial"
         ],
         "summary": "Creates new review. Available to students.",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "rating": {
-                    "type": "number",
-                    "default": "5.0"
-                  },
-                  "comment": {
-                    "type": "string"
-                  },
-                  "date": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "student": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/Testimonial"
               }
             }
           }
@@ -707,33 +627,17 @@
         }
       }
     },
-    "/reviews/edit": {
+    "/student/reviews/edit": {
       "put": {
         "tags": [
-          "Student"
+          "Testimonial"
         ],
         "summary": "Edits existing review. Available to students.",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "rating": {
-                    "type": "number",
-                    "default": "5.0"
-                  },
-                  "comment": {
-                    "type": "string"
-                  },
-                  "date": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "student": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/Testimonial"
               }
             }
           }
@@ -800,84 +704,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "nameChinese": {
-                    "type": "string"
-                  },
-                  "nameEnglish": {
-                    "type": "string"
-                  },
-                  "profilePhoto": {
-                    "type": "string"
-                  },
-                  "studentContacts": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "owner": {
-                          "type": "string",
-                          "enum": [
-                            "student"
-                          ]
-                        },
-                        "contactService": {
-                          "type": "string",
-                          "description": "The ID of the contact service"
-                        },
-                        "contactValue": {
-                          "type": "string",
-                          "description": "The value of the contact information"
-                        }
-                      },
-                      "required": [
-                        "owner",
-                        "contactService",
-                        "contactValue"
-                      ]
-                    }
-                  },
-                  "parentContacts": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "owner": {
-                          "type": "string",
-                          "enum": [
-                            "student"
-                          ]
-                        },
-                        "contactService": {
-                          "type": "string",
-                          "description": "The ID of the contact service"
-                        },
-                        "contactValue": {
-                          "type": "string",
-                          "description": "The value of the contact information"
-                        }
-                      },
-                      "required": [
-                        "owner",
-                        "contactService",
-                        "contactValue"
-                      ]
-                    }
-                  },
-                  "school": {
-                    "type": "string"
-                  },
-                  "accountLogin": {
-                    "type": "string"
-                  },
-                  "accountEmail": {
-                    "type": "string"
-                  },
-                  "user": {
-                    "type": "string"
-                  }
-                }
+"$ref": "#/components/schemas/StudentProfile"
               }
             }
           }
@@ -900,48 +727,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "nameChinese": {
-                    "type": "string"
-                  },
-                  "nameEnglish": {
-                    "type": "string"
-                  },
-                  "profilePhoto": {
-                    "type": "string"
-                  },
-                  "studentWechat": {
-                    "type": "string"
-                  },
-                  "parentWechat": {
-                    "type": "string"
-                  },
-                  "studentEmail": {
-                    "type": "string"
-                  },
-                  "studentWhatsApp": {
-                    "type": "string"
-                  },
-                  "parentWhatsApp": {
-                    "type": "string"
-                  },
-                  "parentTelegram": {
-                    "type": "string"
-                  },
-                  "school": {
-                    "type": "string"
-                  },
-                  "accountLogin": {
-                    "type": "string"
-                  },
-                  "accountEmail": {
-                    "type": "string"
-                  },
-                  "user": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/StudentProfile"
               }
             }
           }
@@ -986,9 +772,9 @@
     "/contactServices": {
       "get": {
         "tags": [
-          "Public"
+          "Util"
         ],
-        "summary": "get all contact services: WeChat, Email, Telegram, etc.",
+        "summary": "Access: public. get all contact services: WeChat, Email, Telegram, etc.",
         "responses": {
           "200": {
             "description": "List of contact services"
@@ -999,7 +785,7 @@
     "/admin/contactServices": {
       "post": {
         "tags": [
-          "Admin"
+          "Util"
         ],
         "summary": "create a new contact service. i.e., Instagram, Telegram",
         "requestBody": {
@@ -1008,7 +794,9 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "contactService": "string"
+                  "contactService": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -1027,7 +815,7 @@
     "/admin/contactServices/{id}": {
       "put": {
         "tags": [
-          "Admin"
+          "Util"
         ],
         "summary": "edit existing contact service. i.e., fix a typo",
         "parameters": [
@@ -1061,7 +849,7 @@
       },
       "delete": {
         "tags": [
-          "Admin"
+          "Util"
         ],
         "summary": "delete a contact service by service id",
         "parameters": [
@@ -1089,7 +877,7 @@
         "tags": [
           "Profile"
         ],
-        "summary": "View all instructors",
+        "summary": "View all instructors. Access: private",
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -1213,51 +1001,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "firstName": {
-                    "type": "string"
-                  },
-                  "lastName": {
-                    "type": "string"
-                  },
-                  "subject": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/MentorProfile"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "description": "Indicates if the request was successful"
-                    },
-                    "message": {
-                      "type": "string",
-                      "description": "A message regarding the operation"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "profileId": {
-                          "type": "string",
-                          "description": "ID of the created profile"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Successful operation"
           }
         }
       },
@@ -1282,18 +1033,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "firstName": {
-                    "type": "string"
-                  },
-                  "lastName": {
-                    "type": "string"
-                  },
-                  "subject": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/MentorProfile"
               }
             }
           }
@@ -1303,76 +1043,719 @@
             "description": "Successful operation"
           },
           "400": {
-            "description": "Profile doesn't exist",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "description": "Indicates if the request was successful"
-                    },
-                    "error": {
-                      "type": "string",
-                      "description": "Error message indicating profile doesn't exist"
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Profile doesn't exist"
           },
           "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "description": "Indicates if the request was successful"
-                    },
-                    "error": {
-                      "type": "string",
-                      "description": "Error message indicating forbidden access"
-                    },
-                    "message": {
-                      "type": "string",
-                      "description": "Additional message"
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Forbidden"
           },
           "404": {
-            "description": "User not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "description": "Indicates if the request was successful"
-                    },
-                    "error": {
-                      "type": "string",
-                      "description": "Error message indicating user not found"
-                    }
-                  }
-                }
-              }
-            }
+            "description": "User not found"
           }
         }
+
       },
       "delete": {
         "tags": [
           "Profile"
         ],
         "summary": "Delete instructor profile",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "No profile"
+          },
+          "500": {
+            "description": "Can't delete profile"
+          }
+        }
+      }
+    },
+    "/student/requests": {
+      "get": {
+        "tags": [
+          "OneToOne"
+        ],
+        "summary": "Access:student. Get one-to-one class requests",
+        "description": "Endpoint for students to get their one-to-one class requests.",
+        "responses": {
+          "200": {
+            "description": "Successful request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/student/payments": {
+      "get": {
+        "tags": [
+          "OneToOne"
+        ],
+        "summary": "Access:student. Get payment requests",
+        "description": "Endpoint for students to get their payment requests.",
+        "responses": {
+          "200": {
+            "description": "Successful request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/student/submit": {
+      "put": {
+        "tags": [
+          "OneToOne"
+        ],
+        "summary": "Submit proof for payment",
+        "description": "Endpoint for submitting proof of payment.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "paymentId": {
+                    "type": "string",
+                    "description": "The ID of the payment request to update."
+                  },
+                  "photoLink": {
+                    "type": "string",
+                    "description": "The link to the proof of payment photo."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Link updated successfully"
+          },
+          "404": {
+            "description": "Data not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/admin/payment": {
+      "post": {
+        "tags": [
+          "OneToOne"
+        ],
+        "summary": "Request payment",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "student": {
+                    "type": "string",
+                    "description": "The ID of the student making the payment request."
+                  },
+                  "request": {
+                    "type": "string",
+                    "description": "The ID of the one-to-one request for which payment is being requested."
+                  }
+                },
+                "required": [
+                  "student",
+                  "request"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Payment request saved"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Request is not approved"
+          },
+          "404": {
+            "description": "Class request lost"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/student/group": {
+      "post": {
+        "tags": [
+          "Group Course"
+        ],
+        "summary": "Creates a new student request for a course",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "student": {
+                    "type": "string",
+                    "format": "Student.Id"
+                  },
+                  "course": {
+                    "type": "string",
+                    "format": "Course.Id"
+                  },
+                  "status": {
+                    "type": "string",
+                    "default": "waiting",
+                    "enum": [
+                      "waiting",
+                      "approved",
+                      "declined"
+                    ]
+                  },
+                  "requestDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Database error, while saving `StudentRequest`"
+          }
+        }
+      }
+    },
+    "/student/group/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Group Course"
+        ],
+        "summary": "Deletes one request by request id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "StudentRequest deleted"
+          },
+          "500": {
+            "description": "Database error deleting `StudentRequest`"
+          }
+        }
+      }
+    },
+    "/admin/group_course/{id}": {
+      "delete": {
+        "tags": [
+          "Group Course"
+        ],
+        "summary": "Delete a group course.Access: admin",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the group course to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group course successfully deleted"
+          },
+          "500": {
+            "description": "Database error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Group Course"
+        ],
+        "summary": "Edit an existing group course. Access: admin",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The ID of the group course to edit"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupCourse"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Group course updated successfully"
+          },
+          "400": {
+            "description": "Group course not found"
+          }
+        }
+      }
+    },
+    "/admin/group_class/{id}": {
+      "delete": {
+        "tags": [
+          "Group Course"
+        ],
+        "summary": "Delete a group class. Access: admin",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the group class to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group class successfully deleted"
+          },
+          "500": {
+            "description": "Database error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Group Course"],
+        "summary": "Update a group class by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the group class to update"
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Authorization token"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupClass"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "GroupClass updated successfully"
+          },
+          "400": {
+            "description": "GroupClass not found"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Group Course"],
+        "summary": "Get group class by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the group class to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved group class."
+          },
+          "404": {
+            "description": "Group class not found."
+          }
+        }
+      }
+    },
+    "/admin/group_session/{id}": {
+      "delete": {
+        "tags": [
+          "Group Course"
+        ],
+        "summary": "Delete a group session.Access: admin",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the group session to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group session successfully deleted"
+          },
+          "500": {
+            "description": "Database error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Group Course"],
+        "summary": "Update an existing group class session",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Authorization token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the group class session to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupClassSession"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Group class session updated successfully"
+          },
+          "400": {
+            "description": "GroupClassSession doesn't exist"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Group Course"],
+        "summary": "Get group session by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the group session to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved group session."
+          },
+          "403": {
+            "description": "You are not authorized to access this group session."
+          },
+          "404": {
+            "description": "Group session not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+  "/admin/group_course": {
+    "post": {
+      "tags": [
+        "Group Course"
+      ],
+      "summary": "Create a new group course. Access: admin",
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GroupCourse"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "201": {
+          "description": "Group course created successfully"
+        },
+        "500": {
+          "description": "Database error"
+        }
+      }
+    }
+  },
+    "/instructor/group_course": {
+      "post": {
+        "tags": [
+          "Group Course"
+        ],
+        "summary": "Create a new group course. Access: mentor",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupCourse"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Group course created successfully"
+          },
+          "500": {
+            "description": "Database error"
+          }
+        }
+      }
+    },
+    "/instructor/group_course/{id}": {
+      "put": {
+        "tags": [
+          "Group Course"
+        ],
+        "summary": "Edit an existing group course. Access: mentor",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The ID of the group course to edit"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupCourse"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Group course updated successfully"
+          },
+          "400": {
+            "description": "Group course not found"
+          }
+        }
+      }
+    },
+  "/admin/group_class": {
+    "post": {
+      "tags": [
+        "Group Class"
+      ],
+      "summary": "Create a new group class.Access: admin",
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GroupClass"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "201": {
+          "description": "Group class created successfully"
+        },
+        "500": {
+          "description": "Database error"
+        }
+      }
+    },
+    "get": {
+      "tags": ["Group Course"],
+      "summary": "Get all group classes",
+      "responses": {
+        "200": {
+          "description": "Success. Retrieved group classes."
+        },
+        "500": {
+          "description": "Internal server error."
+        }
+      }
+    }
+  },
+    "/instructor/group_class": {
+      "post": {
+        "tags": [
+          "Group Class"
+        ],
+        "summary": "Create a new group class. Access: instructor",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupClass"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Group class created successfully"
+          },
+          "500": {
+            "description": "Database error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Group Course"],
+        "summary": "Get all group classes",
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved group classes."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/instructor/group_class/{id}": {
+      "put": {
+        "tags": ["Group Course"],
+        "summary": "Update a group class by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the group class to update"
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Authorization token"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupClass"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "GroupClass updated successfully"
+          },
+          "400": {
+            "description": "GroupClass not found"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Group Course"],
+        "summary": "Get group class by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the group class to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved group class."
+          },
+          "404": {
+            "description": "Group class not found."
+          }
+        }
+      }
+    },
+    "/admin/group_session": {
+      "post": {
+        "tags": ["Group Course"],
+        "summary": "Create a new group class session",
         "parameters": [
           {
             "in": "header",
@@ -1384,66 +1767,293 @@
             "description": "Authorization token"
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupClassSession"
+              }
+            }
+          }
+        },
         "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "description": "Indicates if the request was successful"
-                    },
-                    "message": {
-                      "type": "string",
-                      "description": "A message regarding the operation"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "No profile",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "description": "Indicates if the request was successful"
-                    },
-                    "error": {
-                      "type": "string",
-                      "description": "Error message indicating no profile found"
-                    }
-                  }
-                }
-              }
-            }
+          "201": {
+            "description": "Group class session created successfully"
           },
           "500": {
-            "description": "Can't delete profile",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "description": "Indicates if the request was successful"
-                    },
-                    "error": {
-                      "type": "string",
-                      "description": "Error message indicating deletion failure"
-                    }
-                  }
-                }
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Group Course"],
+        "summary": "Get all group sessions",
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved group sessions."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/instructor/group_session": {
+      "post": {
+        "tags": ["Group Course"],
+        "summary": "Create a new group class session",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Authorization token"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupClassSession"
               }
             }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Group class session created successfully"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Group Course"],
+        "summary": "Get all group sessions",
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved group sessions."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/instructor/group_session/{id}": {
+      "put": {
+        "tags": ["Group Course"],
+        "summary": "Update an existing group class session",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Authorization token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the group class session to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupClassSession"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Group class session updated successfully"
+          },
+          "400": {
+            "description": "GroupClassSession doesn't exist"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Group Course"],
+        "summary": "Get group session by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the group session to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved group session."
+          },
+          "403": {
+            "description": "You are not authorized to access this group session."
+          },
+          "404": {
+            "description": "Group session not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/student/group_class": {
+      "get": {
+        "tags": ["Group Course"],
+        "summary": "Get all group classes",
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved group classes."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/student/group_session": {
+      "get": {
+        "tags": ["Group Course"],
+        "summary": "Get all group sessions",
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved group sessions."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/student/group_session/{id}": {
+      "get": {
+        "tags": ["Group Course"],
+        "summary": "Get group session by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the group session to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved group session."
+          },
+          "403": {
+            "description": "You are not authorized to access this group session."
+          },
+          "404": {
+            "description": "Group session not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+},
+    "/student/group_class/{id}": {
+      "get": {
+        "tags": ["Group Course"],
+        "summary": "Get group class by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the group class to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved group class."
+          },
+          "404": {
+            "description": "Group class not found."
+          }
+        }
+      }
+    },
+    "/admin/group": {
+      "get": {
+        "tags": ["Group Course"],
+        "summary": "Get all student requests for group courses",
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved student requests for group courses."
+          }
+        }
+      }
+    },
+    "/admin/group/{studentId}": {
+      "get": {
+        "tags": ["Group Course"],
+        "summary": "Get student requests for group courses by student ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "studentId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the student"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved student requests for group courses by student ID."
+          }
+        }
+      }
+    },
+    "/student/group/{studentId}": {
+      "get": {
+        "tags": ["Group Course"],
+        "summary": "Get student requests for group courses by student ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "studentId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the student"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved student requests for group courses by student ID."
           }
         }
       }
