@@ -23,18 +23,31 @@ export async function createReview(req: Request, res: Response) {
         .then((obj) => res.status(201).send({ success: true, data: { newReview: obj } }))
         .catch((err) => {
             console.log('Database error: ', err)
-            return res.status(500).send({ success: false, message: "Database error, while saving `Review`" })
+            return res.status(500).send({ success: false, message: "Database error, while saving `StudentTestimonial`" })
         })
 }
 
-//delete Review - for students, admins, mentors - located in privateRoutes.ts
+//delete Review - for students, admins, mentors - located in privateRoutes.ts. Students can delete only their own review.
 export async function deleteReview(req: Request, res: Response) {
+    const user = res.locals.user;
+    const loggedInUserRole = user.role;
+
+    if (loggedInUserRole === 'student') {
+        const review = await StudentTestimonial.findById(req.params.id);
+        if (!review) {
+            return res.status(404).send({ success: false, error: 'Review not found' });
+        }
+
+        if (!review.student || review.student.toString() !== user.profile.toString()) {
+            return res.status(403).send({ success: false, error: 'You are not authorized to delete this review' });
+        }
+    }
     return await StudentTestimonial.deleteOne({ _id: req.params.id })
         .then(() => res.send({ success: true, message: 'Review was deleted' }))
         .catch((err) => {
-            console.log('Database error: ', err)
-            return res.status(500).send({ success: false, error: "Database error deleting `Review`" })
-        })
+            console.log('Database error: ', err);
+            return res.status(500).send({ success: false, error: "Database error deleting review" });
+        });
 }
 
 //edit Review - for students
