@@ -16,5 +16,4 @@ router.get('/reviews', getReviews)
 router.get('/reviews/:id', getReview)
 //Instagram, Email, WeChat:
 router.get('/contactServices', contactServices)
-
 export const publicRoutes = router;
