@@ -4,9 +4,12 @@ import { User } from "../../models/userModel";
 import {
     createMentorProfile,
     deleteMentorProfile,
-    getMentor,
     updateMentorProfile
-} from "./profile.ts";
+} from "./profile";
+import {courseRoutesForAdminsAndMentors} from "../courseControllers/courseRoutesForAdminsAndMentors.ts";
+import {
+    courseRoutesAdminsMentorsStudentsWhoPaid
+} from "../courseControllers/courseRoutesAdminsMentorsStudentsWhoPaid.ts";
 
 const router = express.Router()
 async function checkMentor(req: Request, res: Response, next: NextFunction) {
@@ -30,7 +33,9 @@ router.use(checkMentor);
 router.put('', updateMentorProfile)
 router.delete('', deleteMentorProfile)
 router.post('', createMentorProfile)
-
+//group courses
+router.use('', courseRoutesForAdminsAndMentors)
+router.use('', courseRoutesAdminsMentorsStudentsWhoPaid)
 
 
 export const mentorControllers = router
