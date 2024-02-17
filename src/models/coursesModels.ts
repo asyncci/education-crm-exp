@@ -93,4 +93,13 @@ export const Contract = model('Contract', ContractSchema);
 ///TODO: Sessions
 
 
+let GroupCourseRequestSchema = new Schema({
+    student: { type: Schema.Types.ObjectId, ref: 'StudentProfile' },
+    course: { type: Schema.Types.ObjectId, ref: 'GroupCourse' },
+    status: { type: String, default: 'waiting', enum: ['waiting', 'approved', 'declined'] },
+    requestDate: Date,
+    decisionDate: Date
+})
 
+
+export const GroupCourseRequest = model('GroupCourseRequest', GroupCourseRequestSchema);

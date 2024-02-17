@@ -1,15 +1,13 @@
 import express, { NextFunction, Request, Response } from "express";
 import { User } from "../../models/userModel";
 import { createStudentProfile, deleteStudentProfile, updateStudentProfile } from "./profile";
-import { getPaymentRequests, getRequests, requestOneToOne, submitProof } from "./oneToOneClassRequests.ts";
+import { getPaymentRequests, getRequests, requestOneToOne, submitProof } from "./oneToOneClassRequests";
 import { StudentProfile } from "../../models/profileModel";
-import {
-    createStudentRequest,
-    deleteStudentRequest,
-    studentRequest,
-    studentRequestsByStudent
-} from "../studentControllers/groupClassRequests"
 import {createReview, editReview} from "../reviewControllers.ts";
+import {studentGroupCourseBeforePaymentControllers} from "../courseControllers/courseRoutesStudentBeforePayment.ts";
+import {
+    courseRoutesAdminsMentorsStudentsWhoPaid
+} from "../courseControllers/courseRoutesAdminsMentorsStudentsWhoPaid.ts";
 const router = express.Router()
 
 async function checkStudent(req: Request, res: Response, next: NextFunction) {
@@ -55,18 +53,14 @@ router.get('/payments', getPaymentRequests)
 //here student submits photo
 router.put('/submit', submitProof)
 
-//view all my requests for a course
-router.get('/requests/:studentId', studentRequestsByStudent)
-//view one request for a course
-router.get('/requests/:id', studentRequest)
-//make request for a course
-router.post('/requests/new', createStudentRequest)
-//delete request for a course
-router.delete('/requests/delete/:id', deleteStudentRequest)
 
 //create review (for a course)
 router.post('/reviews/new', createReview)
 //edit review (for a course)
 router.put('/reviews/edit', editReview)
+
+//group courses
+router.use('', studentGroupCourseBeforePaymentControllers)
+router.use('', courseRoutesAdminsMentorsStudentsWhoPaid)
 
 export const studentControllers = router;

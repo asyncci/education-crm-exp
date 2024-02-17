@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import {ContactService} from "../../models/profileModel.ts";
+import {ContactService} from "../../models/profileModel";
 
 //get all
 export async function contactServices(req: Request, res: Response) {

@@ -1,8 +1,8 @@
-import express, { NextFunction, Response, Request } from "express"
-import { verify } from 'jsonwebtoken'
-import { config } from "../config";
-import { adminControllers } from "./controllers/adminControllers/controllers";
-import { studentControllers } from "./controllers/studentControllers/controllers";
+import express, {NextFunction, Request, Response} from "express"
+import {verify} from 'jsonwebtoken'
+import {config} from "../config";
+import {adminControllers} from "./controllers/adminControllers/controllers";
+import {studentControllers} from "./controllers/studentControllers/controllers";
 import {deleteReview} from "./controllers/reviewControllers";
 import {getStudent} from "./controllers/studentControllers/profile.ts";
 import {mentorControllers} from "./controllers/mentorControllers/controllers.ts";
