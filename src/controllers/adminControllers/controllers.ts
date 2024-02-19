@@ -1,4 +1,3 @@
-<<<<<<<<< Temporary merge branch 1
 import express, {NextFunction, Request, Response} from "express";
 import {User} from "../../models/userModel";
 import {addCurator, deleteCurator} from "./curatorAccount";
