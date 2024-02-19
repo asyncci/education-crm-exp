@@ -14,12 +14,13 @@ import {
     courseRoutesAdminsMentorsStudentsWhoPaid
 } from "../courseControllers/courseRoutesAdminsMentorsStudentsWhoPaid.ts";
 import {addAcademicArea, deleteAcademicArea} from "../academicAreaControllers.ts";
+import {addNewsAdmin, deleteNewsAdmin} from "./newsAdminAccount.ts";
 
 const router = express.Router()
 
 async function checkCurator(req: Request, res: Response, next: NextFunction) {
 
-    const auth = req.headers.authorization || req.body.authorization;
+    const auth = req.headers.authorization ?? req.body.authorization;
     const user = await User.findOne({token: auth})
 
     if (!user)
@@ -36,6 +37,9 @@ router.use(checkCurator)
 /// add new curators, only curators can create curators
 router.post('', addCurator)
 router.delete('', deleteCurator)
+
+router.post('/blog_admin', addNewsAdmin)
+router.delete('/blog_admin', deleteNewsAdmin)
 
 /// utilities
 router.post('/academicArea', addAcademicArea)

@@ -6,28 +6,6 @@ let CategorySchema = new Schema({
 })
 export const Category = model('Category', CategorySchema);
 
-/*
-
-getBlogs - all
---- get one blog
-getActiveBlogs
-getBlog - ifActive// if admin - get anyways
-writeBlog
-editBlog
-deleteBlog - if delted, delete all elements
-
-
-share Blog
-getAllShares
-
-bookmark
-delete bookmark
-getAllMyBookmarks
-???What happens if a bookmarked blog is deleted? if not active anymore?
-
- */
-
-
 let BlogSchema = new Schema({
     category: [{type: Schema.Types.ObjectId, ref: Category}],
     title: String,

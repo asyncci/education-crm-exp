@@ -908,8 +908,13 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "contactService": "string"
-                }
+                  "contactService": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "contactService"
+                ]
               }
             }
           }
@@ -939,17 +944,24 @@
               "type": "string"
             },
             "description": "The ID of the contact service to be edited"
+          }],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "contactService": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "contactService"
+                  ]
+                }
+              }
+            }
           },
-          {
-            "in": "body",
-            "name": "contactService",
-            "required": true,
-            "schema": {
-              "type": "object"
-            },
-            "description": "The updated contact service data"
-          }
-        ],
         "responses": {
           "200": {
             "description": "ContactService was updated"

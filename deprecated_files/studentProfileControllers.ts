@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { User } from "../../models/userModel";
-import { StudentProfile } from "../../models/profileModel";
+import {StudentProfile} from "../src/models/profileModel.ts";
+import {User} from "../src/models/userModel.ts";
+
 
 export async function createStudentProfile(req: Request, res: Response) {
     const { authorization } = req.headers;
@@ -15,19 +16,19 @@ export async function createStudentProfile(req: Request, res: Response) {
         const isProfile = await StudentProfile.findById(profile);
 
         if (isProfile)
-            return res.status(400).send({ success: false, error: 'Profile already exsists' })
+            return res.status(400).send({ success: false, error: 'Profile already exists' })
 
         const { body } = req;
         const newProfile = new StudentProfile(body);
         return await newProfile
             .save()
-            .then(async (profileObj) => {
+            .then(async (profileObj:any) => {
                 await User.updateOne({ _id: user._id }, { $set: { profile: profileObj._id } })
                     .catch(() => {
                         return res.status(500).send({ success: false, error: "Can't update user profile in database" })
                     })
 
-                return res.status(200).send({ success: true, message: 'Successfuly created profile', data: { profile: profileObj } })
+                return res.status(200).send({ success: true, message: 'Successfully created profile', data: { profile: profileObj } })
             })
             .catch(() => res.status(500).send({ success: false, error: "Can't save profile to database" }))
     }
@@ -49,9 +50,9 @@ export async function updateStudentProfile(req: Request, res: Response) {
 
         ///FIND AND UPDATE
         return await StudentProfile.findOneAndUpdate({ _id: profile }, body, { new: true })
-            .then(async (doc) => {
+            .then(async (doc:any) => {
                 if (doc)
-                    return res.status(200).send({ success: true, message: 'Successfuly updated profile', data: { profile: doc } })
+                    return res.status(200).send({ success: true, message: 'Successfully updated profile', data: { profile: doc } })
                 else
                     return res.status(400).send({ success: false, error: "Profile doesn't exist" })
             })
@@ -83,7 +84,7 @@ export async function getStudent(req: Request, res: Response) {
         return res.status(404).send({ success: false, error: 'No Data' })
 
 
-    return res.send({ success: true, message: 'Successfuly got student profile', data: profile })
+    return res.send({ success: true, message: 'Successfully got student profile', data: profile })
 }
 export async function getAllStudents(req: Request, res: Response) {
     const profiles = await StudentProfile.find({})
@@ -91,5 +92,5 @@ export async function getAllStudents(req: Request, res: Response) {
     if (!profiles)
         return res.status(404).send({ success: false, error: 'No Data' })
 
-    return res.send({ success: true, message: 'Successfuly got student profiles', data: profiles })
+    return res.send({ success: true, message: 'Successfully got student profiles', data: profiles })
 }

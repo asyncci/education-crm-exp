@@ -28,7 +28,7 @@ export async function createInterview(req: Request, res: Response) {
     const interview = new Interview(other)
     return await interview
         .save()
-        .then((interview) => res.status(200).send({ success: true, message: 'Successfuly created interview', data: { request: requestObj } }))
+        .then((interview) => res.status(200).send({ success: true, message: 'Successfully created interview', data: { request: requestObj } }))
         .catch(() => res.status(500).send({ success: false, error: "Can't save interview to database" }))
 }
 
@@ -47,7 +47,7 @@ export async function createRequestIndividualCourse(req: Request, res: Response)
     const request = new IndividualClassRequest({ ...req.body , student});
     return await request
         .save()
-        .then((requestObj) => res.status(200).send({ success: true, message: 'Successfuly created request', data: { request: requestObj } }))
+        .then((requestObj) => res.status(200).send({ success: true, message: 'Successfully created request', data: { request: requestObj } }))
         .catch(() => res.status(500).send({ success: false, error: "Can't save request to database" }))
 }
 

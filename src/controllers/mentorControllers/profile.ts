@@ -41,7 +41,7 @@ export async function updateMentorProfile(req: Request, res: Response) {
         if (role !== 'mentor')
             return res.status(403).send({
                 success: false,
-                error: "You can't sign to instrucotr data",
+                error: "You can't sign to instructor data",
                 message: `Your role is ${role}`
             })
 
@@ -52,7 +52,7 @@ export async function updateMentorProfile(req: Request, res: Response) {
                 if (doc)
                     return res.status(200).send({
                         success: true,
-                        message: 'Successfuly updated profile',
+                        message: 'Successfully updated profile',
                         data: {profile: doc}
                     })
                 else

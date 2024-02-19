@@ -37,7 +37,7 @@ export async function updateStudentProfile(req: Request, res: Response) {
     return await StudentProfile.findOneAndUpdate({ _id: user.profile }, req.body, { new: true })
         .then(async (doc) => {
             if (doc)
-                return res.status(200).send({ success: true, message: 'Successfuly updated profile', data: { profile: doc } })
+                return res.status(200).send({ success: true, message: 'Successfully updated profile', data: { profile: doc } })
             else
                 return res.status(400).send({ success: false, error: "Profile doesn't exist" })
         })
@@ -57,7 +57,7 @@ export async function getStudent(req: Request, res: Response) {
     if (!profile)
         return res.status(404).send({ success: false, error: 'No Data' })
 
-    return res.send({ success: true, message: 'Successfuly got student profile', data: profile })
+    return res.send({ success: true, message: 'Successfully got student profile', data: profile })
 }
 export async function getAllStudents(req: Request, res: Response) {
     const profiles = await StudentProfile.find({})
@@ -65,5 +65,5 @@ export async function getAllStudents(req: Request, res: Response) {
     if (!profiles)
         return res.status(404).send({ success: false, error: 'No Data' })
 
-    return res.send({ success: true, message: 'Successfuly got student profiles', data: profiles })
+    return res.send({ success: true, message: 'Successfully got student profiles', data: profiles })
 }
