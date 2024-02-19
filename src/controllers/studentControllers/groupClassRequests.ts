@@ -52,8 +52,18 @@ export async function deleteStudentRequest(req: Request, res: Response) {
         })
 }
 
-//edit StudentRequest - for admins
-export async function editStudentRequest(req: Request, res: Response) {
+//approve StudentRequest - for admins
+export async function approveRequest(req: Request, res: Response) {
+    return await GroupCourseRequest.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
+        .then(async (doc:any) => {
+            if (doc)
+                return res.status(200).send({ success: true, message: 'GroupCourseRequest updated', data: { course: doc} })
+            else
+                return res.status(400).send({ success: false, error: "Request doesn't exist" })
+        })
+}
+//decline StudentRequest - for admins
+export async function declineRequest(req: Request, res: Response) {
     return await GroupCourseRequest.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
         .then(async (doc:any) => {
             if (doc)

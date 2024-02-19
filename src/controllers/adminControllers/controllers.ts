@@ -1,3 +1,4 @@
+<<<<<<<<< Temporary merge branch 1
 import express, {NextFunction, Request, Response} from "express";
 import {User} from "../../models/userModel";
 import {addCurator, deleteCurator} from "./curatorAccount";
@@ -14,6 +15,7 @@ import {
     courseRoutesAdminsMentorsStudentsWhoPaid
 } from "../courseControllers/courseRoutesAdminsMentorsStudentsWhoPaid.ts";
 import {addAcademicArea, deleteAcademicArea} from "../academicAreaControllers.ts";
+import {addNewsAdmin, deleteNewsAdmin} from "./newsAdminAccount.ts";
 
 const router = express.Router()
 
@@ -36,6 +38,9 @@ router.use(checkCurator)
 /// add new curators, only curators can create curators
 router.post('', addCurator)
 router.delete('', deleteCurator)
+
+router.post('/blog_admin', addNewsAdmin)
+router.delete('/blog_admin', deleteNewsAdmin)
 
 /// utilities
 router.post('/academicArea', addAcademicArea)

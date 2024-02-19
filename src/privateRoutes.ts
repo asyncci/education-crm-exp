@@ -7,6 +7,8 @@ import {deleteReview} from "./controllers/reviewControllers";
 import {getStudent} from "./controllers/studentControllers/profile.ts";
 import {mentorControllers} from "./controllers/mentorControllers/controllers.ts";
 import {getAllMentors, getMentor} from "./controllers/mentorControllers/profile.ts";
+import {blogControllers} from "./controllers/blogControllers/controllers.ts";
+import {loggedInUserControllers} from "./controllers/blogControllers/loggedInUserControllers.ts";
 
 let router = express.Router()
 
@@ -48,5 +50,8 @@ router.get('/profile/instructor/:profileId', getMentor)
 //view all mentors
 router.get('/instructors', getAllMentors)
 
+//blogs
+router.use('/blog', blogControllers)
+router.use('/blog/in', loggedInUserControllers)
 
 export const privateRoutes = router;

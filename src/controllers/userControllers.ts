@@ -94,5 +94,5 @@ export async function signIn(req: Request, res: Response) {
         token: token,
     };
 
-    return res.status(202).send({ success: true, message: 'Logged in successfuly', data: data })
+    return res.status(202).send({ success: true, message: 'Logged in successfully', data: data })
 }

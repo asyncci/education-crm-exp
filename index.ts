@@ -29,7 +29,7 @@ if (!Bun.env.MONGODB) {
 }
 
 await mongoose.connect(Bun.env.MONGODB)
-    .then(() => console.log('Successfuly connected to MongoDB'))
+    .then(() => console.log('Successfully connected to MongoDB'))
     .catch((err) => {
         throw new Error(`Can't connect to database: ${err}`)
     });

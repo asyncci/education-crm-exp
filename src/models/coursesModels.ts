@@ -64,7 +64,7 @@ let IndividualClassSchema = new Schema({
     topic: String,
     mentor: { type: Schema.Types.ObjectId, ref: 'MentorProfile'},
     student: { type: Schema.Types.ObjectId, ref: 'StudentProfile'},
-    sessions: [ { type: Schema.Types.ObjectId, rstatusef: 'IndividualClassSession'} ]
+    sessions: [ { type: Schema.Types.ObjectId, ref: 'IndividualClassSession'} ]
 })
 
 let IndividualClassSessionSchema = new Schema({
@@ -72,7 +72,7 @@ let IndividualClassSessionSchema = new Schema({
     start_time: Date,
     session_files: [ String ],
     homework: String,
-    homework_status: { type: String, enum: ['submited', 'unsubmited'], default: 'unsubmited'},
+    homework_status: { type: String, enum: ['submitted', 'unsubmitted'], default: 'unsubmitted'},
 })
 
 let ContractSchema = new Schema({

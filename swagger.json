@@ -69,7 +69,11 @@
           },
           "status": {
             "type": "string",
-            "enum": ["not_started", "ongoing", "finished"],
+            "enum": [
+              "not_started",
+              "ongoing",
+              "finished"
+            ],
             "description": "The status of the group class"
           },
           "starting_date": {
@@ -257,6 +261,96 @@
                 }
               }
             }
+          }
+        }
+      },
+      "Blog": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "title": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "coverPhoto": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "comments": {
+            "type": "number"
+          },
+          "likes": {
+            "type": "number"
+          },
+          "htmlContent": {
+            "type": "string"
+          }
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "category"
+        ]
+      },
+      "Comment": {
+        "type": "object",
+        "properties": {
+          "blog": {
+            "type": "string",
+            "description": "ID of the blog the comment belongs to"
+          },
+          "author": {
+            "type": "string",
+            "description": "ID of the user who authored the comment"
+          },
+          "text": {
+            "type": "string",
+            "description": "Text content of the comment"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the comment was created"
+          }
+        },
+        "required": [
+          "blog",
+          "author",
+          "text",
+          "date"
+        ]
+      },
+      "Like": {
+        "type": "object",
+        "properties": {
+          "blog": {
+            "type": "string",
+            "description": "ID of the blog that was liked"
+          },
+          "author": {
+            "type": "string",
+            "description": "ID of the user who liked the blog"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the like was created"
           }
         }
       }
@@ -704,7 +798,7 @@
           "content": {
             "application/json": {
               "schema": {
-"$ref": "#/components/schemas/StudentProfile"
+                "$ref": "#/components/schemas/StudentProfile"
               }
             }
           }
@@ -827,17 +921,24 @@
               "type": "string"
             },
             "description": "The ID of the contact service to be edited"
+          }],
+  "requestBody": {
+    "content": {
+      "application/json": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "contactService": {
+              "type": "string"
+            }
           },
-          {
-            "in": "body",
-            "name": "contactService",
-            "required": true,
-            "schema": {
-              "type": "object"
-            },
-            "description": "The updated contact service data"
-          }
-        ],
+          "required": [
+            "contactService"
+          ]
+        }
+      }
+    }
+     },
         "responses": {
           "200": {
             "description": "ContactService was updated"
@@ -1052,7 +1153,6 @@
             "description": "User not found"
           }
         }
-
       },
       "delete": {
         "tags": [
@@ -1520,32 +1620,32 @@
         }
       }
     },
-  "/admin/group_course": {
-    "post": {
-      "tags": [
-        "Group Course"
-      ],
-      "summary": "Create a new group course. Access: admin",
-      "requestBody": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/GroupCourse"
+    "/admin/group_course": {
+      "post": {
+        "tags": [
+          "Group Course"
+        ],
+        "summary": "Create a new group course. Access: admin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupCourse"
+              }
             }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Group course created successfully"
+          },
+          "500": {
+            "description": "Database error"
           }
-        },
-        "required": true
-      },
-      "responses": {
-        "201": {
-          "description": "Group course created successfully"
-        },
-        "500": {
-          "description": "Database error"
         }
       }
-    }
-  },
+    },
     "/instructor/group_course": {
       "post": {
         "tags": [
@@ -1609,44 +1709,46 @@
         }
       }
     },
-  "/admin/group_class": {
-    "post": {
-      "tags": [
-        "Group Class"
-      ],
-      "summary": "Create a new group class.Access: admin",
-      "requestBody": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/GroupClass"
+    "/admin/group_class": {
+      "post": {
+        "tags": [
+          "Group Class"
+        ],
+        "summary": "Create a new group class.Access: admin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupClass"
+              }
             }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Group class created successfully"
+          },
+          "500": {
+            "description": "Database error"
           }
-        },
-        "required": true
+        }
       },
-      "responses": {
-        "201": {
-          "description": "Group class created successfully"
-        },
-        "500": {
-          "description": "Database error"
+      "get": {
+        "tags": [
+          "Group Course"
+        ],
+        "summary": "Get all group classes",
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved group classes."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
         }
       }
     },
-    "get": {
-      "tags": ["Group Course"],
-      "summary": "Get all group classes",
-      "responses": {
-        "200": {
-          "description": "Success. Retrieved group classes."
-        },
-        "500": {
-          "description": "Internal server error."
-        }
-      }
-    }
-  },
     "/instructor/group_class": {
       "post": {
         "tags": [
@@ -2057,6 +2159,767 @@
           }
         }
       }
+    },
+    "/blogs": {
+      "get": {
+        "tags": [
+          "Blogs"
+        ],
+        "summary": "Get active blogs",
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved active blogs."
+          }
+        }
+      }
+    },
+    "/blogs/{category}": {
+      "get": {
+        "tags": [
+          "Blogs"
+        ],
+        "summary": "Get blogs by category",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "category",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The category of the blogs"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved blogs by category."
+          }
+        }
+      }
+    },
+    "/blogs/{id}": {
+      "get": {
+        "tags": [
+          "Blogs"
+        ],
+        "summary": "Get blog by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the blog"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved blog by ID."
+          }
+        }
+      }
+    },
+    "/blogs/categories": {
+      "get": {
+        "tags": [
+          "Blogs"
+        ],
+        "summary": "Get all blog categories",
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved all blog categories."
+          }
+        }
+      }
+    },
+    "/blogs/category/{id}": {
+      "get": {
+        "tags": [
+          "Blogs"
+        ],
+        "summary": "Get a specific blog category by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the blog category"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved the specified blog category."
+          }
+        }
+      }
+    },
+    "/blogs/{blog}": {
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Get comments for a specific blog",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "blog",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the blog"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved comments for the specified blog."
+          }
+        }
+      }
+    },
+    "/blogs/comment/{id}": {
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Get a specific comment by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the comment"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved the specified comment."
+          }
+        }
+      }
+    },
+    "/blogs/likes": {
+      "get": {
+        "tags": [
+          "Like"
+        ],
+        "summary": "Get all likes for a blog post",
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved all likes for the specified blog post."
+          }
+        }
+      }
+    },
+    "/blog": {
+      "get": {
+        "tags": [
+          "Blogs"
+        ],
+        "summary": "Get all blogs",
+        "responses": {
+          "200": {
+            "description": "Success. Retrieved all blogs."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Blogs"
+        ],
+        "summary": "Create a new blog",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Blog"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success. Blog created."
+          },
+          "500": {
+            "description": "Database error. Blog creation failed."
+          }
+        }
+      }
+    },
+    "/blog/{id}": {
+      "delete": {
+        "tags": [
+          "Blogs"
+        ],
+        "summary": "Delete a blog",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "ID of the blog to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. Blog deleted."
+          },
+          "500": {
+            "description": "Database error. Blog deletion failed."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Blogs"
+        ],
+        "summary": "Edit a blog",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "ID of the blog to edit"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Blog"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success. Blog updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Blog"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Blog doesn't exist."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/blog/category": {
+      "post": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Create a new category",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Category"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Success. Category created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Database error, while saving `Category`."
+          }
+        }
+      }
+    },
+    "/blog/category/{id}": {
+      "delete": {
+        "summary": "Delete a category",
+        "tags": [
+          "Category"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the category to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Category deleted successfully"
+          },
+          "500": {
+            "description": "Database error deleting Category"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a category",
+        "tags": [
+          "Category"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the category to update"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Category"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Category updated successfully"
+          },
+          "400": {
+            "description": "Category doesn't exist"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/blog/in/bookmark": {
+      "get": {
+        "summary": "Get bookmarks",
+        "tags": [
+          "Bookmark"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Authorization token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bookmarks retrieved successfully"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new bookmark",
+        "tags": [
+          "Bookmark"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Authorization token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "blog": {
+                    "type": "string",
+                    "description": "ID of the blog to bookmark"
+                  }
+                },
+                "required": [
+                  "blog"
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Bookmark created successfully"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/blog/in/bookmark/{id}": {
+      "delete": {
+        "summary": "Delete a bookmark by ID",
+        "tags": [
+          "Bookmark"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Authorization token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the bookmark to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bookmark deleted successfully"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/blog/in/comment": {
+      "post": {
+        "summary": "Create a new comment",
+        "tags": [
+          "Comment"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Authorization token"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Comment created successfully"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/blog/in/comment/{id}": {
+      "delete": {
+        "summary": "Delete a comment by ID",
+        "tags": [
+          "Comment"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the comment to delete"
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Authorization token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comment deleted successfully"
+          },
+          "403": {
+            "description": "Unauthorized: User is not the author of the comment"
+          },
+          "404": {
+            "description": "Comment not found"
+          },
+          "500": {
+            "description": "Database error deleting `Comment`"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a comment by ID",
+        "tags": [
+          "Comment"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the comment to update"
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Authorization token"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Comment updated successfully"
+          },
+          "400": {
+            "description": "Comment doesn't exist"
+          },
+          "403": {
+            "description": "You are not authorized to edit this comment"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/blog/in/like": {
+      "post": {
+        "summary": "Create a like",
+        "tags": [
+          "Like"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Authorization token"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Like"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Like created successfully"
+          },
+          "500": {
+            "description": "Database error, while saving `Like`"
+          }
+        }
+      }
+    },
+    "/blog/in/like/{id}": {
+      "delete": {
+        "summary": "Delete a like",
+        "tags": [
+          "Like"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Authorization token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the like to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Like deleted successfully"
+          },
+          "403": {
+            "description": "Unauthorized: User did not like this item"
+          },
+          "404": {
+            "description": "Like not found"
+          },
+          "500": {
+            "description": "Database error deleting `Like`"
+          }
+        }
+      }
+    },
+    "/admin/blog_admin": {
+      "post": {
+        "summary": "Add news admin",
+        "tags": [
+          "Admin"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Email of the news admin"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response. The news admin is registered."
+          },
+          "409": {
+            "description": "Conflict response. The user already exists."
+          },
+          "500": {
+            "description": "Internal server error. Can't store user in database."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete news admin",
+        "tags": [
+          "Admin"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "ID of the news admin"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Email of the news admin"
+                  }
+                },
+                "required": [
+                  "id",
+                  "email"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response. The news admin is deleted."
+          },
+          "500": {
+            "description": "Internal server error. Can't delete news admin from database."
+          }
+        }
+      }
     }
   }
 }
+
+

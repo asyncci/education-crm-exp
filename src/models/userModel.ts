@@ -4,7 +4,7 @@ let UserSchema = new Schema({
     email: String,
     password: String,
     profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
-    role: { type: String, enum: ['student', 'mentor', 'curator'] },
+    role: { type: String, enum: ['student', 'mentor', 'curator', 'blog_admin'] },
     verified: { type: Boolean, default: false },
     token: String,
 })
