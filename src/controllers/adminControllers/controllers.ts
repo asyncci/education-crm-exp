@@ -1,3 +1,4 @@
+<<<<<<<<< Temporary merge branch 1
 import express, {NextFunction, Request, Response} from "express";
 import {User} from "../../models/userModel";
 import {addCurator, deleteCurator} from "./curatorAccount";
@@ -20,7 +21,7 @@ const router = express.Router()
 
 async function checkCurator(req: Request, res: Response, next: NextFunction) {
 
-    const auth = req.headers.authorization ?? req.body.authorization;
+    const auth = req.headers.authorization || req.body.authorization;
     const user = await User.findOne({token: auth})
 
     if (!user)

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {GroupCourse} from "../../models/coursesModels";
 
+
 //get all 
 export async function groupCourses(req: Request, res: Response) {
     const groupCourses = await GroupCourse.find({});
@@ -8,9 +9,15 @@ export async function groupCourses(req: Request, res: Response) {
 }
 
 //get one course
-export async function groupCourse(req: Request, res: Response) {
+export async function groupCourseClear(req: Request, res: Response) {
     const groupCourse = await GroupCourse.find({ _id: req.params.id });
     return res.send({ success: true, data: { groupCourse: groupCourse } })
+}
+
+//get course with applying data
+export async function groupCourse(req: Request, res: Response) {
+    const groupCourses = await GroupCourse.find({});
+    return res.send({ success: true, data: { groupCourses: groupCourses } })
 }
 
 //create course
