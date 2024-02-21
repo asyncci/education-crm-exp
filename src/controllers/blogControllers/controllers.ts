@@ -7,13 +7,13 @@ const router = express.Router()
 
 async function checkCurator(req: Request, res: Response, next: NextFunction) {
 
-    const auth = req.headers.authorization ?? req.body.authorization;
+    const auth = req.headers.authorization || req.body.authorization;
     const user = await User.findOne({token: auth})
 
     if (!user)
         return res.status(400).send({success: false, error: 'No user for such token'})
 
-    if (user.role !== 'curator' || 'blog_admin')
+    if (user.role !== 'curator' && user.role !== 'blog_admin')
         return res.status(403).send({success: false, error: "You are not authorized to edit blog"})
 
     res.locals.user = user
