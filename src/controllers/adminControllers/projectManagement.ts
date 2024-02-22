@@ -2,12 +2,14 @@ import { Request, Response } from "express";
 import { AcademicArea } from "../../models/academicAreaModel";
 import { RequestOneToOneClass } from "../../models/oneToOneClassModel";
 import { RequestPayment } from "../../models/paymentModel";
+import {GroupCourseRequest, IndividualClassRequest} from "../../models/coursesModels.ts";
 
 ///Get requested classes, waiting for approvement
 export async function getRequestsFromStudents(_: Request, res: Response) {
-    const requests = await RequestOneToOneClass.find({})
+    const individualRequests = await IndividualClassRequest.find({})
+    const groupRequests = await GroupCourseRequest.find({})
 
-    return res.send({ success: true, data: { studentRequests: requests } })
+    return res.send({success: true, individualRequests, groupRequests})
 }
 
 

@@ -8,6 +8,10 @@ import {studentGroupCourseBeforePaymentControllers} from "../courseControllers/c
 import {
     courseRoutesAdminsMentorsStudentsWhoPaid
 } from "../courseControllers/courseRoutesAdminsMentorsStudentsWhoPaid.ts";
+import {
+    createRequestIC,
+    getStudentICRequests
+} from "../individualCourseControllers.ts";
 const router = express.Router()
 
 async function checkStudent(req: Request, res: Response, next: NextFunction) {
@@ -45,9 +49,9 @@ router.delete('', deleteStudentProfile)
 
 router.use(checkProfile)
 //make request
-router.post('/request', requestOneToOne)
+router.post('/request', createRequestIC)
 //get requests for particular student
-router.get('/requests', getRequests)
+router.get('/requests', getStudentICRequests)
 //approved class request, so payment request appears for student, so he should pay
 router.get('/payments', getPaymentRequests)
 //here student submits photo

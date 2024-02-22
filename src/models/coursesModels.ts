@@ -44,6 +44,7 @@ export const GroupClass = model('GroupClass', GroupClassSchema);
 export const GroupClassSession = model('GroupClassSession', GroupClassSessionSchema);
 
 let IndividualClassRequestSchema = new Schema({
+    topic: String,
     description: String,
     first_interview: { type: Schema.Types.ObjectId, ref: 'Interview'},
     second_interview: { type: Schema.Types.ObjectId, ref: 'Interview'},
@@ -83,10 +84,10 @@ let ContractSchema = new Schema({
     student: { type: Schema.Types.ObjectId, ref: 'StudentProfile'},
 })
 
-export const IndividualClassRequest = model('IndividualClassRequestSchema', IndividualClassRequestSchema);
-export const Interview = model('InterviewSchema', InterviewSchema);
-export const IndividualClass = model('IndividualClassSchema', IndividualClassSchema);
-export const IndividualClassSession = model('IndividualClassSessionSchema', IndividualClassSessionSchema);
+export const IndividualClassRequest = model('Individual Class Request', IndividualClassRequestSchema);
+export const Interview = model('Interview Schema', InterviewSchema);
+export const IndividualClass = model('Individual Class Schema', IndividualClassSchema);
+export const IndividualClassSession = model('Individual Class Session', IndividualClassSessionSchema);
 export const Contract = model('Contract', ContractSchema);
 
 ///TODO: Zoom link
