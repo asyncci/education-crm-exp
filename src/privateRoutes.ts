@@ -14,7 +14,6 @@ let router = express.Router()
 
 function authorization(req: Request, res: Response, next: NextFunction) {
     let token = req.headers.authorization || req.body.authorization;
-
     if (token) {
         const verified = verify(token, config.secretKey)
 

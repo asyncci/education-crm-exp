@@ -20,6 +20,16 @@
         "in": "header"
       }
     },
+    "parameters": {
+      "AuthorizationHeader": {
+        "in": "header",
+        "name": "authorization",
+        "schema": {
+          "type": "string"
+        },
+        "description": "Authorization token"
+      }
+    },
     "schemas": {
       "GroupCourse": {
         "type": "object",
@@ -561,6 +571,11 @@
       "get": {
         "tags": [
           "OneToOne"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "responses": {
           "200": {
