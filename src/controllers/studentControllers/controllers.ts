@@ -40,14 +40,14 @@ async function checkProfile(req: Request, res: Response, next: NextFunction) {
     next()
 }
 
-router.use(checkStudent)
+//router.use(checkStudent)
 
 //profile
 router.post('', createStudentProfile)
 router.put('', updateStudentProfile)
 router.delete('', deleteStudentProfile)
 
-router.use(checkProfile)
+//router.use(checkProfile)
 //make request
 router.post('/request', createRequestIC)
 //get requests for particular student

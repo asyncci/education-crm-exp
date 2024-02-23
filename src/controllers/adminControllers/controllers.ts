@@ -33,7 +33,7 @@ async function checkCurator(req: Request, res: Response, next: NextFunction) {
     next()
 }
 
-router.use(checkCurator)
+//router.use(checkCurator)
 /// add new curators, only curators can create curators
 router.post('', addCurator)
 router.delete('', deleteCurator)

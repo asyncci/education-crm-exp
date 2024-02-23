@@ -27,7 +27,7 @@ async function checkMentor(req: Request, res: Response, next: NextFunction) {
     next()
 }
 
-router.use(checkMentor);
+//router.use(checkMentor);
 
 //profile routes:
 router.put('', updateMentorProfile)

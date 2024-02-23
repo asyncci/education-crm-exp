@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, response } from "express";
 import { User } from "../models/userModel";
 import { sign } from "jsonwebtoken";
 import { config } from "../../config";
@@ -6,6 +6,9 @@ import { comparePassword } from "../lib/core";
 
 export async function signUp(req: Request, res: Response) {
     const { email, password, role } = req.body;
+
+    if (!email|| !password || !role) 
+        return res.status(403).send("send filled normal request")
 
     const user = await User.findOne({ 'email': email })
     if (user)
@@ -55,22 +58,21 @@ export async function signUp(req: Request, res: Response) {
 export async function signIn(req: Request, res: Response) {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ 'email': email })
+    if (!email|| !password) 
+        return res.status(403).send("send filled normal request")
+
+    const user = await User.findOne({ email })
 
     if (!user)
         return res.status(409).send({ success: false, error: 'Invalid Credentials' })
 
-
-    const passwordString = typeof password == 'number' ? password.toString() : password;
-    const validPassword = comparePassword(passwordString, user?.password!);
+    const validPassword = comparePassword(password, user?.password!);
 
     if (!validPassword)
         return res.status(409).send({ success: false, error: 'Invalid Credentials' })
 
-    let ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
-
     const token = sign(
-        { user: { _id: user._id, email: user.email || '', role: user.role }, ip: ip },
+        { user: { _id: user._id, email: user.email || '', role: user.role }},
         config.secretKey,
         { expiresIn: config.expiresIn }
     )
@@ -86,7 +88,7 @@ export async function signIn(req: Request, res: Response) {
     const data = {
         _id: user._id,
         email: user.email,
-        profile: user.profile || null,
+        profile: user.profile,
         role: user.role,
         token: token,
     };
