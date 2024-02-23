@@ -3,8 +3,8 @@ import { User } from "../../models/userModel";
 import { createStudentProfile, deleteStudentProfile, updateStudentProfile } from "./profile";
 import { getPaymentRequests, getRequests, requestOneToOne, submitProof } from "./oneToOneClassRequests";
 import { StudentProfile } from "../../models/profileModel";
-import {createReview, editReview} from "../reviewControllers.ts";
-import {studentGroupCourseBeforePaymentControllers} from "../courseControllers/courseRoutesStudentBeforePayment.ts";
+import { createReview, editReview } from "../reviewControllers.ts";
+import { studentGroupCourseBeforePaymentControllers } from "../courseControllers/courseRoutesStudentBeforePayment.ts";
 import {
     courseRoutesAdminsMentorsStudentsWhoPaid
 } from "../courseControllers/courseRoutesAdminsMentorsStudentsWhoPaid.ts";
@@ -12,11 +12,13 @@ import {
     createRequestIC,
     getStudentICRequests
 } from "../individualCourseControllers.ts";
+import { optimizeNextInvocation } from "bun:jsc";
 const router = express.Router()
 
 async function checkStudent(req: Request, res: Response, next: NextFunction) {
     const auth = req.headers.authorization || req.body.authorization;
-    const user = await User.findOne({ token: auth })
+    //const user = await User.findOne({token: auth})
+    const user = await User.findOne({ role: "student" })
 
     if (!user)
         return res.status(400).send({ success: false, error: 'No user for such token' })
@@ -25,7 +27,29 @@ async function checkStudent(req: Request, res: Response, next: NextFunction) {
         return res.status(403).send({ success: false, error: "You are not `student`" })
 
     res.locals.user = user;
+    createProfile(req, res)
     next()
+}
+
+async function createProfile(req: Request, res: Response) {
+    const user = res.locals.user;
+    const isProfile = await StudentProfile.findById(user.profile);
+
+    if (isProfile)
+        return
+
+    const { body } = req;
+    const newProfile = new StudentProfile(body);
+
+    try {
+        const savedProfile = await newProfile.save();
+        await User.updateOne({ _id: user._id }, { $set: { profile: savedProfile._id } });
+
+        return;
+    } catch (error) {
+        console.error('Error saving profile:', error);
+        return;
+    }
 }
 
 
@@ -40,14 +64,14 @@ async function checkProfile(req: Request, res: Response, next: NextFunction) {
     next()
 }
 
-//router.use(checkStudent)
+router.use(checkStudent)
 
 //profile
 router.post('', createStudentProfile)
 router.put('', updateStudentProfile)
 router.delete('', deleteStudentProfile)
 
-//router.use(checkProfile)
+router.use(checkProfile)
 //make request
 router.post('/request', createRequestIC)
 //get requests for particular student
