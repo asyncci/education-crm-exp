@@ -41,7 +41,12 @@ export async function createRequestIC(req: Request, res: Response) {
 export async function getStudentICRequests(req: Request, res: Response) {
     const student = res.locals.student;
     const data = await IndividualClassRequest.find({student: student})
-    return res.send({ success: true, requests: data})
+    const collected = await Promise.all(data.map(async (doc) => {
+        const first_interview = await Interview.findById(doc.first_interview)
+        const second_interview = await Interview.findById(doc.second_interview)
+        return {first_interview, second_interview} && doc
+    }))
+    return res.send({ success: true, requests: collected})
 }
 
 export async function approveRequest(req: Request, res: Response) {

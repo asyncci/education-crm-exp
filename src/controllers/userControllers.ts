@@ -7,9 +7,6 @@ import { comparePassword } from "../lib/core";
 export async function signUp(req: Request, res: Response) {
     const { email, password, role } = req.body;
 
-    if (role === 'curator')
-        return res.status(400).send({ success: false, error: 'You can not register `curator`' })
-
     const user = await User.findOne({ 'email': email })
     if (user)
         return res.status(409).send({ success: false, error: 'User already exists' })
