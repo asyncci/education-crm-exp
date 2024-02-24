@@ -13,7 +13,8 @@ import {loggedInUserControllers} from "./controllers/blogControllers/loggedInUse
 let router = express.Router()
 
 function authorization(req: Request, res: Response, next: NextFunction) {
-    let token = req.headers.authorization || req.body.authorization;
+    let token = req.headers.Authorization || req.body.authorization;
+
     if (token) {
         const verified = verify(token, config.secretKey)
 

@@ -17,7 +17,7 @@ export async function groupCourseClear(req: Request, res: Response) {
 //get course with applying data
 export async function groupCourse(req: Request, res: Response) {
     const groupCourse = await GroupCourse.findById(req.params.id);
-    return res.send({ success: true, course: groupCourse })
+    return res.send({ success: true, course: groupCourse})
 }
 
 //create course

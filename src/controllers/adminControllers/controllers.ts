@@ -22,7 +22,7 @@ async function checkCurator(req: Request, res: Response, next: NextFunction) {
 
     const auth = req.headers.authorization || req.body.authorization;
     const user = await User.findOne({token: auth})
-
+    // const user = await User.findOne({role: "curator"})
     if (!user)
         return res.status(400).send({success: false, error: 'No user for such token'})
 

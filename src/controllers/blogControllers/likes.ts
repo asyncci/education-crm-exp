@@ -13,13 +13,11 @@ export async function createLike(req: Request, res: Response) {
     try {
         const like = new Like(req.body);
         const savedLike = await like.save();
-
         // Update blog's likes number
         await Blog.updateOne(
             { _id: savedLike.blog },
             { $inc: { likes: 1 } }
         );
-
         return res.status(201).send({ success: true, data: { like: savedLike } });
     } catch (err) {
         console.log('Database error: ', err);
