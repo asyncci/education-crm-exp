@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.2",
+  "openapi": "3.1.0",
   "info": {
     "title": "EduCRM",
     "version": "1.0"
@@ -257,7 +257,11 @@
                 },
                 "status": {
                   "type": "string",
-                  "enum": ["absent", "present", "excused"]
+                  "enum": [
+                    "absent",
+                    "present",
+                    "excused"
+                  ]
                 }
               }
             }
@@ -503,6 +507,11 @@
         "tags": [
           "Admin"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "201": {
             "description": "Curator registered"
@@ -519,6 +528,11 @@
         "tags": [
           "Admin"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Curator deleted"
@@ -534,6 +548,11 @@
         "tags": [
           "Academic Area"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "201": {
             "description": "Academic area was added"
@@ -546,6 +565,11 @@
       "delete": {
         "tags": [
           "Academic Area"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "responses": {
           "200": {
@@ -562,6 +586,11 @@
         "tags": [
           "OneToOne"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful response"
@@ -573,6 +602,11 @@
       "put": {
         "tags": [
           "OneToOne"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "requestBody": {
           "content": {
@@ -614,6 +648,11 @@
       "post": {
         "tags": [
           "OneToOne"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "summary": "Access:student.Request new one to one class",
         "requestBody": {
@@ -675,6 +714,11 @@
         "tags": [
           "Testimonial"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "summary": "Access: private. Deletes one review by ID ",
         "parameters": [
           {
@@ -701,6 +745,11 @@
         "tags": [
           "Testimonial"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "summary": "Creates new review. Available to students.",
         "requestBody": {
           "content": {
@@ -725,6 +774,11 @@
       "put": {
         "tags": [
           "Testimonial"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "summary": "Edits existing review. Available to students.",
         "requestBody": {
@@ -751,6 +805,11 @@
         "tags": [
           "Profile"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "summary": "View all students",
         "responses": {
           "200": {
@@ -766,6 +825,11 @@
       "get": {
         "tags": [
           "Profile"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "summary": "view one student profile by profile id",
         "parameters": [
@@ -793,6 +857,11 @@
         "tags": [
           "Profile"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "summary": "create new student profile",
         "requestBody": {
           "content": {
@@ -816,6 +885,11 @@
         "tags": [
           "Profile"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "summary": "update student profile",
         "requestBody": {
           "content": {
@@ -838,6 +912,11 @@
       "delete": {
         "tags": [
           "Profile"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "summary": "Deletes profile by id",
         "requestBody": {
@@ -881,6 +960,11 @@
         "tags": [
           "Util"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "summary": "create a new contact service. i.e., Instagram, Telegram",
         "requestBody": {
           "content": {
@@ -911,6 +995,11 @@
         "tags": [
           "Util"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "summary": "edit existing contact service. i.e., fix a typo",
         "parameters": [
           {
@@ -921,24 +1010,25 @@
               "type": "string"
             },
             "description": "The ID of the contact service to be edited"
-          }],
-  "requestBody": {
-    "content": {
-      "application/json": {
-        "schema": {
-          "type": "object",
-          "properties": {
-            "contactService": {
-              "type": "string"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contactService": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "contactService"
+                ]
+              }
             }
-          },
-          "required": [
-            "contactService"
-          ]
-        }
-      }
-    }
-     },
+          }
+        },
         "responses": {
           "200": {
             "description": "ContactService was updated"
@@ -951,6 +1041,11 @@
       "delete": {
         "tags": [
           "Util"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "summary": "delete a contact service by service id",
         "parameters": [
@@ -977,6 +1072,11 @@
       "get": {
         "tags": [
           "Profile"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "summary": "View all instructors. Access: private",
         "responses": {
@@ -1031,6 +1131,11 @@
       "get": {
         "tags": [
           "Profile"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "summary": "View one instructor profile by profile id",
         "parameters": [
@@ -1096,6 +1201,11 @@
         "tags": [
           "Profile"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "summary": "Create a new instructor profile",
         "requestBody": {
           "required": true,
@@ -1117,18 +1227,12 @@
         "tags": [
           "Profile"
         ],
-        "summary": "Update instructor profile",
-        "parameters": [
+        "security": [
           {
-            "in": "header",
-            "name": "authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Authorization token"
+            "BearerAuth": []
           }
         ],
+        "summary": "Update instructor profile",
         "requestBody": {
           "required": true,
           "content": {
@@ -1158,6 +1262,11 @@
         "tags": [
           "Profile"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "summary": "Delete instructor profile",
         "responses": {
           "200": {
@@ -1177,6 +1286,11 @@
         "tags": [
           "OneToOne"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "summary": "Access:student. Get one-to-one class requests",
         "description": "Endpoint for students to get their one-to-one class requests.",
         "responses": {
@@ -1193,6 +1307,11 @@
       "get": {
         "tags": [
           "OneToOne"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "summary": "Access:student. Get payment requests",
         "description": "Endpoint for students to get their payment requests.",
@@ -1211,7 +1330,12 @@
         "tags": [
           "OneToOne"
         ],
-        "summary": "Submit proof for payment",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: student.Submit proof for payment",
         "description": "Endpoint for submitting proof of payment.",
         "requestBody": {
           "content": {
@@ -1249,6 +1373,11 @@
       "post": {
         "tags": [
           "OneToOne"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "summary": "Request payment",
         "requestBody": {
@@ -1299,7 +1428,12 @@
         "tags": [
           "Group Course"
         ],
-        "summary": "Creates a new student request for a course",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: student. Creates a new student request for a course",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1347,7 +1481,12 @@
         "tags": [
           "Group Course"
         ],
-        "summary": "Deletes one request by request id",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: student. Deletes one request by request id",
         "parameters": [
           {
             "name": "id",
@@ -1373,6 +1512,11 @@
         "tags": [
           "Group Course"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "summary": "Delete a group course.Access: admin",
         "parameters": [
           {
@@ -1397,6 +1541,11 @@
       "put": {
         "tags": [
           "Group Course"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "summary": "Edit an existing group course. Access: admin",
         "parameters": [
@@ -1433,7 +1582,12 @@
     "/admin/group_class/{id}": {
       "delete": {
         "tags": [
-          "Group Course"
+          "Group Class"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "summary": "Delete a group class. Access: admin",
         "parameters": [
@@ -1457,8 +1611,15 @@
         }
       },
       "put": {
-        "tags": ["Group Course"],
-        "summary": "Update a group class by ID",
+        "tags": [
+          "Group Class"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: admin. Update a group class by ID",
         "parameters": [
           {
             "in": "path",
@@ -1499,8 +1660,15 @@
         }
       },
       "get": {
-        "tags": ["Group Course"],
-        "summary": "Get group class by ID",
+        "tags": [
+          "Group Class"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: admin. Get group class by ID",
         "parameters": [
           {
             "in": "path",
@@ -1525,7 +1693,12 @@
     "/admin/group_session/{id}": {
       "delete": {
         "tags": [
-          "Group Course"
+          "Group Session"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "summary": "Delete a group session.Access: admin",
         "parameters": [
@@ -1549,8 +1722,15 @@
         }
       },
       "put": {
-        "tags": ["Group Course"],
-        "summary": "Update an existing group class session",
+        "tags": [
+          "Group Session"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: admin. Update an existing group class session",
         "parameters": [
           {
             "in": "header",
@@ -1591,8 +1771,15 @@
         }
       },
       "get": {
-        "tags": ["Group Course"],
-        "summary": "Get group session by ID",
+        "tags": [
+          "Group Session"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: admin. Get group session by ID",
         "parameters": [
           {
             "in": "path",
@@ -1625,6 +1812,11 @@
         "tags": [
           "Group Course"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "summary": "Create a new group course. Access: admin",
         "requestBody": {
           "content": {
@@ -1651,6 +1843,11 @@
         "tags": [
           "Group Course"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "summary": "Create a new group course. Access: mentor",
         "requestBody": {
           "content": {
@@ -1676,6 +1873,11 @@
       "put": {
         "tags": [
           "Group Course"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "summary": "Edit an existing group course. Access: mentor",
         "parameters": [
@@ -1714,6 +1916,11 @@
         "tags": [
           "Group Class"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "summary": "Create a new group class.Access: admin",
         "requestBody": {
           "content": {
@@ -1736,7 +1943,12 @@
       },
       "get": {
         "tags": [
-          "Group Course"
+          "Group Class"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "summary": "Get all group classes",
         "responses": {
@@ -1753,6 +1965,11 @@
       "post": {
         "tags": [
           "Group Class"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "summary": "Create a new group class. Access: instructor",
         "requestBody": {
@@ -1775,8 +1992,15 @@
         }
       },
       "get": {
-        "tags": ["Group Course"],
-        "summary": "Get all group classes",
+        "tags": [
+          "Group Class"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: instructor. Get all group classes",
         "responses": {
           "200": {
             "description": "Success. Retrieved group classes."
@@ -1789,8 +2013,15 @@
     },
     "/instructor/group_class/{id}": {
       "put": {
-        "tags": ["Group Course"],
-        "summary": "Update a group class by ID",
+        "tags": [
+          "Group Class"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: instructor. Update a group class by ID",
         "parameters": [
           {
             "in": "path",
@@ -1800,15 +2031,6 @@
               "type": "string"
             },
             "description": "ID of the group class to update"
-          },
-          {
-            "in": "header",
-            "name": "authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Authorization token"
           }
         ],
         "requestBody": {
@@ -1831,8 +2053,15 @@
         }
       },
       "get": {
-        "tags": ["Group Course"],
-        "summary": "Get group class by ID",
+        "tags": [
+          "Group Class"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: instructor. Get group class by ID",
         "parameters": [
           {
             "in": "path",
@@ -1856,19 +2085,15 @@
     },
     "/admin/group_session": {
       "post": {
-        "tags": ["Group Course"],
-        "summary": "Create a new group class session",
-        "parameters": [
+        "tags": [
+          "Group Session"
+        ],
+        "security": [
           {
-            "in": "header",
-            "name": "authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Authorization token"
+            "BearerAuth": []
           }
         ],
+        "summary": "Access: instructor. Create a new group class session",
         "requestBody": {
           "required": true,
           "content": {
@@ -1889,8 +2114,15 @@
         }
       },
       "get": {
-        "tags": ["Group Course"],
-        "summary": "Get all group sessions",
+        "tags": [
+          "Group Session"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: instructor. Get all group sessions",
         "responses": {
           "200": {
             "description": "Success. Retrieved group sessions."
@@ -1903,19 +2135,15 @@
     },
     "/instructor/group_session": {
       "post": {
-        "tags": ["Group Course"],
-        "summary": "Create a new group class session",
-        "parameters": [
+        "tags": [
+          "Group Session"
+        ],
+        "security": [
           {
-            "in": "header",
-            "name": "authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Authorization token"
+            "BearerAuth": []
           }
         ],
+        "summary": "Access: instructor.Create a new group class session",
         "requestBody": {
           "required": true,
           "content": {
@@ -1936,8 +2164,15 @@
         }
       },
       "get": {
-        "tags": ["Group Course"],
-        "summary": "Get all group sessions",
+        "tags": [
+          "Group Session"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: instructor. Get all group sessions",
         "responses": {
           "200": {
             "description": "Success. Retrieved group sessions."
@@ -1950,18 +2185,16 @@
     },
     "/instructor/group_session/{id}": {
       "put": {
-        "tags": ["Group Course"],
-        "summary": "Update an existing group class session",
-        "parameters": [
+        "tags": [
+          "Group Session"
+        ],
+        "security": [
           {
-            "in": "header",
-            "name": "authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Authorization token"
-          },
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: instructor. Update an existing group class session",
+        "parameters": [
           {
             "in": "path",
             "name": "id",
@@ -1992,8 +2225,15 @@
         }
       },
       "get": {
-        "tags": ["Group Course"],
-        "summary": "Get group session by ID",
+        "tags": [
+          "Group Session"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: instructor. Get group session by ID",
         "parameters": [
           {
             "in": "path",
@@ -2023,8 +2263,15 @@
     },
     "/student/group_class": {
       "get": {
-        "tags": ["Group Course"],
-        "summary": "Get all group classes",
+        "tags": [
+          "Group Class"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: student. Get all group classes",
         "responses": {
           "200": {
             "description": "Success. Retrieved group classes."
@@ -2037,8 +2284,15 @@
     },
     "/student/group_session": {
       "get": {
-        "tags": ["Group Course"],
-        "summary": "Get all group sessions",
+        "tags": [
+          "Group Session"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: student. Get all group sessions",
         "responses": {
           "200": {
             "description": "Success. Retrieved group sessions."
@@ -2051,8 +2305,15 @@
     },
     "/student/group_session/{id}": {
       "get": {
-        "tags": ["Group Course"],
-        "summary": "Get group session by ID",
+        "tags": [
+          "Group Session"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: student. Get group session by ID",
         "parameters": [
           {
             "in": "path",
@@ -2079,11 +2340,18 @@
           }
         }
       }
-},
+    },
     "/student/group_class/{id}": {
       "get": {
-        "tags": ["Group Course"],
-        "summary": "Get group class by ID",
+        "tags": [
+          "Group Class"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: student. Get group class by ID",
         "parameters": [
           {
             "in": "path",
@@ -2107,8 +2375,15 @@
     },
     "/admin/group": {
       "get": {
-        "tags": ["Group Course"],
-        "summary": "Get all student requests for group courses",
+        "tags": [
+          "Group Course"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: admin. Get all student requests for group courses",
         "responses": {
           "200": {
             "description": "Success. Retrieved student requests for group courses."
@@ -2118,8 +2393,15 @@
     },
     "/admin/group/{studentId}": {
       "get": {
-        "tags": ["Group Course"],
-        "summary": "Get student requests for group courses by student ID",
+        "tags": [
+          "Group Course"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: admin. Get student requests for group courses by student ID",
         "parameters": [
           {
             "in": "path",
@@ -2140,8 +2422,15 @@
     },
     "/student/group/{studentId}": {
       "get": {
-        "tags": ["Group Course"],
-        "summary": "Get student requests for group courses by student ID",
+        "tags": [
+          "Group Course"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: student. Get student requests for group courses by student ID",
         "parameters": [
           {
             "in": "path",
@@ -2324,7 +2613,12 @@
         "tags": [
           "Blogs"
         ],
-        "summary": "Get all blogs",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: admin or news admin. Get all blogs",
         "responses": {
           "200": {
             "description": "Success. Retrieved all blogs."
@@ -2335,7 +2629,12 @@
         "tags": [
           "Blogs"
         ],
-        "summary": "Create a new blog",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: admin or news admin. Create a new blog",
         "requestBody": {
           "required": true,
           "content": {
@@ -2361,7 +2660,12 @@
         "tags": [
           "Blogs"
         ],
-        "summary": "Delete a blog",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: admin or news admin. Delete a blog",
         "parameters": [
           {
             "in": "path",
@@ -2387,7 +2691,12 @@
         "tags": [
           "Blogs"
         ],
-        "summary": "Edit a blog",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: admin or news admin. Edit a blog",
         "parameters": [
           {
             "in": "path",
@@ -2435,7 +2744,12 @@
         "tags": [
           "Categories"
         ],
-        "summary": "Create a new category",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Access: admin or news admin. Create a new category",
         "requestBody": {
           "content": {
             "application/json": {
@@ -2465,9 +2779,14 @@
     },
     "/blog/category/{id}": {
       "delete": {
-        "summary": "Delete a category",
+        "summary": "Access: admin or news admin. Delete a category",
         "tags": [
           "Category"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -2490,9 +2809,14 @@
         }
       },
       "put": {
-        "summary": "Update a category",
+        "summary": "Access: admin or news admin. Update a category",
         "tags": [
           "Category"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -2530,19 +2854,13 @@
     },
     "/blog/in/bookmark": {
       "get": {
-        "summary": "Get bookmarks",
+        "summary": "Access: private. Get bookmarks",
         "tags": [
           "Bookmark"
         ],
-        "parameters": [
+        "security": [
           {
-            "in": "header",
-            "name": "authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Authorization token"
+            "BearerAuth": []
           }
         ],
         "responses": {
@@ -2555,19 +2873,13 @@
         }
       },
       "post": {
-        "summary": "Create a new bookmark",
+        "summary": "Access: private. Create a new bookmark",
         "tags": [
           "Bookmark"
         ],
-        "parameters": [
+        "security": [
           {
-            "in": "header",
-            "name": "authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Authorization token"
+            "BearerAuth": []
           }
         ],
         "requestBody": {
@@ -2601,20 +2913,16 @@
     },
     "/blog/in/bookmark/{id}": {
       "delete": {
-        "summary": "Delete a bookmark by ID",
+        "summary": "Access: private. Delete a bookmark by ID",
         "tags": [
           "Bookmark"
         ],
-        "parameters": [
+        "security": [
           {
-            "in": "header",
-            "name": "authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Authorization token"
-          },
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
           {
             "in": "path",
             "name": "id",
@@ -2637,19 +2945,13 @@
     },
     "/blog/in/comment": {
       "post": {
-        "summary": "Create a new comment",
+        "summary": "Access: private. Create a new comment",
         "tags": [
           "Comment"
         ],
-        "parameters": [
+        "security": [
           {
-            "in": "header",
-            "name": "authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Authorization token"
+            "BearerAuth": []
           }
         ],
         "requestBody": {
@@ -2674,9 +2976,14 @@
     },
     "/blog/in/comment/{id}": {
       "delete": {
-        "summary": "Delete a comment by ID",
+        "summary": "Access: private. Delete a comment by ID",
         "tags": [
           "Comment"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -2687,15 +2994,6 @@
               "type": "string"
             },
             "description": "ID of the comment to delete"
-          },
-          {
-            "in": "header",
-            "name": "authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Authorization token"
           }
         ],
         "responses": {
@@ -2714,9 +3012,14 @@
         }
       },
       "put": {
-        "summary": "Update a comment by ID",
+        "summary": "Access: private. Update a comment by ID",
         "tags": [
           "Comment"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -2727,15 +3030,6 @@
               "type": "string"
             },
             "description": "ID of the comment to update"
-          },
-          {
-            "in": "header",
-            "name": "authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Authorization token"
           }
         ],
         "requestBody": {
@@ -2766,19 +3060,13 @@
     },
     "/blog/in/like": {
       "post": {
-        "summary": "Create a like",
+        "summary": "Access: private. Create a like",
         "tags": [
           "Like"
         ],
-        "parameters": [
+        "security": [
           {
-            "in": "header",
-            "name": "authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Authorization token"
+            "BearerAuth": []
           }
         ],
         "requestBody": {
@@ -2803,20 +3091,16 @@
     },
     "/blog/in/like/{id}": {
       "delete": {
-        "summary": "Delete a like",
+        "summary": "Access: private. Delete a like",
         "tags": [
           "Like"
         ],
-        "parameters": [
+        "security": [
           {
-            "in": "header",
-            "name": "authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Authorization token"
-          },
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
           {
             "in": "path",
             "name": "id",
@@ -2845,9 +3129,14 @@
     },
     "/admin/blog_admin": {
       "post": {
-        "summary": "Add news admin",
+        "summary": "Access: admin. Add news admin",
         "tags": [
           "Admin"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "requestBody": {
           "required": true,
@@ -2881,9 +3170,14 @@
         }
       },
       "delete": {
-        "summary": "Delete news admin",
+        "summary": "Access: admin. Delete news admin",
         "tags": [
           "Admin"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "requestBody": {
           "required": true,
