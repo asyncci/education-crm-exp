@@ -1582,7 +1582,7 @@
     "/admin/group_class/{id}": {
       "delete": {
         "tags": [
-          "Group Course"
+          "Group Class"
         ],
         "security": [
           {
@@ -1612,7 +1612,7 @@
       },
       "put": {
         "tags": [
-          "Group Course"
+          "Group Class"
         ],
         "security": [
           {
@@ -1661,7 +1661,7 @@
       },
       "get": {
         "tags": [
-          "Group Course"
+          "Group Class"
         ],
         "security": [
           {
@@ -1693,7 +1693,7 @@
     "/admin/group_session/{id}": {
       "delete": {
         "tags": [
-          "Group Course"
+          "Group Session"
         ],
         "security": [
           {
@@ -1723,7 +1723,7 @@
       },
       "put": {
         "tags": [
-          "Group Course"
+          "Group Session"
         ],
         "security": [
           {
@@ -1772,7 +1772,7 @@
       },
       "get": {
         "tags": [
-          "Group Course"
+          "Group Session"
         ],
         "security": [
           {
@@ -1943,7 +1943,7 @@
       },
       "get": {
         "tags": [
-          "Group Course"
+          "Group Class"
         ],
         "security": [
           {
@@ -1993,7 +1993,7 @@
       },
       "get": {
         "tags": [
-          "Group Course"
+          "Group Class"
         ],
         "security": [
           {
@@ -2014,7 +2014,7 @@
     "/instructor/group_class/{id}": {
       "put": {
         "tags": [
-          "Group Course"
+          "Group Class"
         ],
         "security": [
           {
@@ -2054,7 +2054,7 @@
       },
       "get": {
         "tags": [
-          "Group Course"
+          "Group Class"
         ],
         "security": [
           {
@@ -2086,7 +2086,7 @@
     "/admin/group_session": {
       "post": {
         "tags": [
-          "Group Course"
+          "Group Session"
         ],
         "security": [
           {
@@ -2115,7 +2115,7 @@
       },
       "get": {
         "tags": [
-          "Group Course"
+          "Group Session"
         ],
         "security": [
           {
@@ -2136,7 +2136,7 @@
     "/instructor/group_session": {
       "post": {
         "tags": [
-          "Group Course"
+          "Group Session"
         ],
         "security": [
           {
@@ -2165,7 +2165,7 @@
       },
       "get": {
         "tags": [
-          "Group Course"
+          "Group Session"
         ],
         "security": [
           {
@@ -2186,7 +2186,7 @@
     "/instructor/group_session/{id}": {
       "put": {
         "tags": [
-          "Group Course"
+          "Group Session"
         ],
         "security": [
           {
@@ -2226,7 +2226,7 @@
       },
       "get": {
         "tags": [
-          "Group Course"
+          "Group Session"
         ],
         "security": [
           {
@@ -2264,7 +2264,7 @@
     "/student/group_class": {
       "get": {
         "tags": [
-          "Group Course"
+          "Group Class"
         ],
         "security": [
           {
@@ -2285,7 +2285,7 @@
     "/student/group_session": {
       "get": {
         "tags": [
-          "Group Course"
+          "Group Session"
         ],
         "security": [
           {
@@ -2306,7 +2306,7 @@
     "/student/group_session/{id}": {
       "get": {
         "tags": [
-          "Group Course"
+          "Group Session"
         ],
         "security": [
           {
@@ -2344,7 +2344,7 @@
     "/student/group_class/{id}": {
       "get": {
         "tags": [
-          "Group Course"
+          "Group Class"
         ],
         "security": [
           {
