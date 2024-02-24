@@ -15,7 +15,8 @@ const router = express.Router()
 async function checkMentor(req: Request, res: Response, next: NextFunction) {
 
     const auth = req.headers.authorization || req.body.authorization;
-    const user = await User.findOne({ role: "mentor" })
+    // const user = await User.findOne({ role: "mentor" })
+    const user = await User.findOne({token: auth})
 
     if (!user)
         return res.status(400).send({ success: false, error: 'No user for such token' })

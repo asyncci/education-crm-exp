@@ -34,7 +34,7 @@ function authorization(req: Request, res: Response, next: NextFunction) {
     }
 }
 
-//router.use(authorization)
+router.use(authorization)
 
 router.use('/admin', adminControllers)
 router.use('/student', studentControllers)
